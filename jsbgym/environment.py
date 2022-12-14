@@ -21,9 +21,9 @@ class JsbSimEnv(gym.Env):
     docstrings have been adapted or copied from the OpenAI Gym source code.
     """
     JSBSIM_DT_HZ: int = 60  # JSBSim integration frequency
-    metadata = {'render_modes': ['human', 'flightgear']}
+    metadata = {"render_modes": ["human", "flightgear"], "render_fps": 4}
 
-    def __init__(self, task_type: Type[HeadingControlTask], aircraft: Aircraft = cessna172P, agent_interaction_freq: int = 5, shaping: Shaping = Shaping.STANDARD, render_mode: Optional[str] = None):
+    def __init__(self, task_type: Type[HeadingControlTask], aircraft: Aircraft = cessna172P, agent_interaction_freq: int = 5, shaping: Shaping = Shaping.STANDARD, render_mode=None):
         """
         Constructor. Inits some internal state, but JsbSimEnv.reset() must be
         called first before interacting with environment.
@@ -50,7 +50,18 @@ class JsbSimEnv(gym.Env):
         self.figure_visualiser: FigureVisualiser = None
         self.flightgear_visualiser: FlightGearVisualiser = None
         self.step_delay = None
+        assert render_mode is None or render_mode in self.metadata["render_modes"]
         self.render_mode = render_mode
+
+    def _get_obs(self):
+        return {"agent": self._agent_location, "target": self._target_location}
+
+    def _get_info(self):
+        return {
+            "distance": np.linalg.norm(
+                self._agent_location - self._target_location, ord=1
+            )
+        }
 
     def step(self, action: np.ndarray) -> Tuple[np.ndarray, float, bool, Dict]:
         """
@@ -66,13 +77,15 @@ class JsbSimEnv(gym.Env):
             done: whether the episode has ended, in which case further step() calls are undefined
             info: auxiliary information, e.g. full reward shaping data
         """
-        if self.render_mode == "human":
-            self.render()
         if action . shape != self . action_space . shape:
             raise ValueError('mismatch between action and action space size')
 
         state, reward, done, info = self.task.task_step(
             self.sim, action, self.sim_steps_per_agent_step)
+
+        if self.render_mode == "human":
+            self.render()
+
         return np.array(state), reward, done, info
 
     def reset(self):
@@ -81,6 +94,7 @@ class JsbSimEnv(gym.Env):
 
         :return: array, the initial observation of the space.
         """
+        super().reset(seed=seed)
 
         init_conditions = self.task.get_initial_conditions()
         if self.sim:
@@ -93,8 +107,13 @@ class JsbSimEnv(gym.Env):
 
         if self.flightgear_visualiser:
             self.flightgear_visualiser.configure_simulation_output(self.sim)
+
+        observation = self._get_obs()
+        info = self._get_info()
+
         if self.render_mode == "human":
             self.render()
+
         return np.array(state)
 
     def _init_new_sim(self, dt, aircraft, initial_conditions):
