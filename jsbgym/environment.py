@@ -4,7 +4,7 @@ from jsbgym.tasks import Shaping, HeadingControlTask
 from jsbgym.simulation import Simulation
 from jsbgym.visualiser import FigureVisualiser, FlightGearVisualiser
 from jsbgym.aircraft import Aircraft, cessna172P
-from typing import Type, Tuple, Dict
+from typing import Optional, Type, Tuple, Dict
 
 
 class JsbSimEnv(gym.Env):
@@ -23,8 +23,8 @@ class JsbSimEnv(gym.Env):
     JSBSIM_DT_HZ: int = 60  # JSBSim integration frequency
     metadata = {'render.modes': ['human', 'flightgear']}
 
-    def __init__(self, task_type: Type[HeadingControlTask], aircraft: Aircraft = cessna172P,
-                 agent_interaction_freq: int = 5, shaping: Shaping = Shaping.STANDARD):
+    def __init__(self, task_type: Type[HeadingControlTask], aircraft: Aircraft = cessna172P, agent_interaction_freq: int = 5, shaping: Shaping = Shaping.STANDARD, render_mode: Optional[str] = None):
+        self.render_mode = render_mode
         """
         Constructor. Inits some internal state, but JsbSimEnv.reset() must be
         called first before interacting with environment.
@@ -66,6 +66,8 @@ class JsbSimEnv(gym.Env):
             done: whether the episode has ended, in which case further step() calls are undefined
             info: auxiliary information, e.g. full reward shaping data
         """
+        if self.render_mode == "human":
+            self.render()
         if action . shape != self . action_space . shape:
             raise ValueError('mismatch between action and action space size')
 
@@ -79,6 +81,8 @@ class JsbSimEnv(gym.Env):
 
         :return: array, the initial observation of the space.
         """
+        if self.render_mode == "human":
+            self.render()
         init_conditions = self.task.get_initial_conditions()
         if self.sim:
             self.sim.reinitialise(init_conditions)
@@ -98,7 +102,7 @@ class JsbSimEnv(gym.Env):
                           aircraft=aircraft,
                           init_conditions=initial_conditions)
 
-    def render(self, mode='flightgear', flightgear_blocking=True):
+    def render(self, flightgear_blocking=True):
         """Renders the environment.
         The set of supported modes varies per environment. (And some
         environments do not support rendering at all.) By convention,
@@ -120,6 +124,7 @@ class JsbSimEnv(gym.Env):
         :param flightgear_blocking: waits for FlightGear to load before
             returning if True, else returns immediately
         """
+        mode = self.render_mode
         if mode == 'human':
             if not self.figure_visualiser:
                 self.figure_visualiser = FigureVisualiser(self.sim,
@@ -182,7 +187,8 @@ class NoFGJsbSimEnv(JsbSimEnv):
                           init_conditions=initial_conditions,
                           allow_flightgear_output=False)
 
-    def render(self, mode='human', flightgear_blocking=True):
+    def render(self, flightgear_blocking=True):
+        mode = self.render_mode
         if mode == 'flightgear':
             raise ValueError('flightgear rendering is disabled for this class')
         else:
