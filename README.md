@@ -10,7 +10,7 @@ import jsbgym
 
 env = gym.make(ENV_ID)
 env.reset()
-state, reward, done, info = env.step(act ion)
+state, reward, done, info = env.step(action)
 ```
 
 JSBGym optionally provides 3D visualisation of controlled aircraft using the FlightGear simulator.
