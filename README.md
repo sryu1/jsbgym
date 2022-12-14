@@ -1,6 +1,6 @@
 # JSBGym
 
-JSBGym provides reinforcement learning environments for the control of fixed-wing aircraft using the JSBSim flight dynamics model. JSBGym requires a Unix-like OS and Python 3.7.
+JSBGym provides reinforcement learning environments for the control of fixed-wing aircraft using the JSBSim flight dynamics model. JSBGym requires at least Python 3.7.
 
 The package's environments implement the OpenAI Gym interface allowing environments to be created and interacted with in the usual way, e.g.:
 
@@ -48,8 +48,8 @@ pip install git+https://github.com/sryu1/jsbgym
 
 JSBGym implements two tasks for controlling the altitude and heading of aircraft:
 
-* **HeadingControl**: aircraft must fly in a straight line, maintaining its initial altitude and direction of travel (heading)
-* **TurnHeadingControl**: aircraft must turn to face a random target heading while maintaining their initial altitude
+* **HeadingControlTask**: aircraft must fly in a straight line, maintaining its initial altitude and direction of travel (heading)
+* **TurnHeadingControlTask**: aircraft must turn to face a random target heading while maintaining their initial altitude
 
 The environment can be configured to use one of three aircraft:
 
@@ -66,7 +66,7 @@ f'JSBSim-{task}-{aircraft}-SHAPING_STANDARD-NoFG-v0'
 For example, to fly a Cessna on the TurnHeadingControl task,
 
 ```python
-env = gym.make('JSBSim-TurnHeadingControl-Cessna172P-SHAPING.STANDARD-NoFG-v0')
+env = gym.make('JSBSim-TurnHeadingControlTask-Cessna172P-Shaping.STANDARD-NoFG-v0')
 ```
 
 ## Visualisation
