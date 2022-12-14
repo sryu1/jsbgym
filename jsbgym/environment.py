@@ -1,10 +1,10 @@
-import gymnasium as gym
+import gym
 import numpy as np
 from jsbgym.tasks import Shaping, HeadingControlTask
 from jsbgym.simulation import Simulation
 from jsbgym.visualiser import FigureVisualiser, FlightGearVisualiser
 from jsbgym.aircraft import Aircraft, cessna172P
-from typing import Optional, Type, Tuple, Dict
+from typing import Type, Tuple, Dict
 
 
 class JsbSimEnv(gym.Env):
@@ -21,9 +21,10 @@ class JsbSimEnv(gym.Env):
     docstrings have been adapted or copied from the OpenAI Gym source code.
     """
     JSBSIM_DT_HZ: int = 60  # JSBSim integration frequency
-    metadata = {"render_modes": ["human", "flightgear"], "render_fps": 4}
+    metadata = {'render.modes': ['human', 'flightgear']}
 
-    def __init__(self, task_type: Type[HeadingControlTask], aircraft: Aircraft = cessna172P, agent_interaction_freq: int = 5, shaping: Shaping = Shaping.STANDARD, render_mode=None):
+    def __init__(self, task_type: Type[HeadingControlTask], aircraft: Aircraft = cessna172P,
+                 agent_interaction_freq: int = 5, shaping: Shaping = Shaping.STANDARD):
         """
         Constructor. Inits some internal state, but JsbSimEnv.reset() must be
         called first before interacting with environment.
@@ -50,8 +51,6 @@ class JsbSimEnv(gym.Env):
         self.figure_visualiser: FigureVisualiser = None
         self.flightgear_visualiser: FlightGearVisualiser = None
         self.step_delay = None
-        self.render_mode = render_mode
-
 
     def step(self, action: np.ndarray) -> Tuple[np.ndarray, float, bool, Dict]:
         """
@@ -67,15 +66,11 @@ class JsbSimEnv(gym.Env):
             done: whether the episode has ended, in which case further step() calls are undefined
             info: auxiliary information, e.g. full reward shaping data
         """
-        if action.shape != self.action_space.shape:
+        if action . shape != self . action_space . shape:
             raise ValueError('mismatch between action and action space size')
 
         state, reward, done, info = self.task.task_step(
             self.sim, action, self.sim_steps_per_agent_step)
-
-        if self.render_mode == "human":
-            self.render()
-
         return np.array(state), reward, done, info
 
     def reset(self):
@@ -84,7 +79,6 @@ class JsbSimEnv(gym.Env):
 
         :return: array, the initial observation of the space.
         """
-
         init_conditions = self.task.get_initial_conditions()
         if self.sim:
             self.sim.reinitialise(init_conditions)
@@ -97,12 +91,6 @@ class JsbSimEnv(gym.Env):
         if self.flightgear_visualiser:
             self.flightgear_visualiser.configure_simulation_output(self.sim)
 
-        observation = self._get_obs()
-        info = self._get_info()
-
-        if self.render_mode == "human":
-            self.render()
-
         return np.array(state)
 
     def _init_new_sim(self, dt, aircraft, initial_conditions):
@@ -110,7 +98,7 @@ class JsbSimEnv(gym.Env):
                           aircraft=aircraft,
                           init_conditions=initial_conditions)
 
-    def render(self, flightgear_blocking=True):
+    def render(self, mode='flightgear', flightgear_blocking=True):
         """Renders the environment.
         The set of supported modes varies per environment. (And some
         environments do not support rendering at all.) By convention,
@@ -132,27 +120,19 @@ class JsbSimEnv(gym.Env):
         :param flightgear_blocking: waits for FlightGear to load before
             returning if True, else returns immediately
         """
-        render_mode = self.render_mode
-        if self.render_mode is None:
-            assert self.spec is not None
-            gym.logger.warn(
-                "You are calling render method without specifying any render mode. "
-                "You can specify the render_mode at initialization, "
-                f'e.g. gym.make("{self.spec.id}", render_mode="rgb_array")'
-            )
-            return
-        if self.render_mode == 'human':
+        if mode == 'human':
             if not self.figure_visualiser:
-                self.figure_visualiser = FigureVisualiser(
-                    self.sim, self.task.get_props_to_output())
+                self.figure_visualiser = FigureVisualiser(self.sim,
+                                                          self.task.get_props_to_output())
             self.figure_visualiser.plot(self.sim)
-        elif self.render_mode == 'flightgear':
+        elif mode == 'flightgear':
             if not self.flightgear_visualiser:
-                self.flightgear_visualiser = FlightGearVisualiser(
-                    self.sim, self.task.get_props_to_output(), flightgear_blocking)
+                self.flightgear_visualiser = FlightGearVisualiser(self.sim,
+                                                                  self.task.get_props_to_output(),
+                                                                  flightgear_blocking)
             self.flightgear_visualiser.plot(self.sim)
         else:
-            self.render_mode = "human"
+            super().render(mode=mode)
 
     def close(self):
         """ Cleans up this environment's objects
@@ -202,9 +182,8 @@ class NoFGJsbSimEnv(JsbSimEnv):
                           init_conditions=initial_conditions,
                           allow_flightgear_output=False)
 
-    def render(self, flightgear_blocking=True):
-        render_mode = self.render_mode
-        if render_mode == 'flightgear':
+    def render(self, mode='human', flightgear_blocking=True):
+        if mode == 'flightgear':
             raise ValueError('flightgear rendering is disabled for this class')
-        elif self.render_mode == "human":
-            self.render()
+        else:
+            super().render(mode, flightgear_blocking)

@@ -5,7 +5,7 @@ JSBGym provides reinforcement learning environments for the control of fixed-win
 The package's environments implement the OpenAI Gym interface allowing environments to be created and interacted with in the usual way, e.g.:
 
 ```python
-import gymnasium as gym
+import gym
 import jsbgym
 
 env = gym.make(ENV_ID)

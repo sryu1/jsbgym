@@ -1,4 +1,4 @@
-import gymnasium as gym
+import gym
 import numpy as np
 from typing import List
 from abc import ABC, abstractmethod

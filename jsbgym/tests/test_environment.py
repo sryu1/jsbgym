@@ -1,5 +1,5 @@
 import unittest
-import gymnasium as gym
+import gym
 import numpy as np
 import matplotlib.pyplot as plt
 import jsbgym.properties as prp
