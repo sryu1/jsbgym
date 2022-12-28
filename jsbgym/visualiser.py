@@ -1,4 +1,4 @@
-import gym
+import gymnasium as gym
 import subprocess
 import time
 import matplotlib.pyplot as plt

@@ -1,4 +1,4 @@
-import gym
+import gymnasium as gym
 import enum
 from jsbgym.tasks import Task, HeadingControlTask, TurnHeadingControlTask
 from jsbgym.aircraft import Aircraft, cessna172P

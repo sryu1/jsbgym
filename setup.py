@@ -10,7 +10,7 @@ setup(name='jsbgym',
       license='MIT',
       install_requires=[
           'numpy',
-          'gym',
+          'gymnasium',
           'matplotlib',
       ],
       packages=find_packages(),

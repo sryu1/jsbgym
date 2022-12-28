@@ -1,10 +1,10 @@
-import gym
+import gymnasium as gym
 import numpy as np
 from jsbgym.tasks import Shaping, HeadingControlTask
 from jsbgym.simulation import Simulation
 from jsbgym.visualiser import FigureVisualiser, FlightGearVisualiser
 from jsbgym.aircraft import Aircraft, cessna172P
-from typing import Type, Tuple, Dict
+from typing import Optional, Type, Tuple, Dict
 
 
 class JsbSimEnv(gym.Env):
@@ -24,7 +24,8 @@ class JsbSimEnv(gym.Env):
     metadata = {'render.modes': ['human', 'flightgear']}
 
     def __init__(self, task_type: Type[HeadingControlTask], aircraft: Aircraft = cessna172P,
-                 agent_interaction_freq: int = 5, shaping: Shaping = Shaping.STANDARD):
+                 agent_interaction_freq: int = 5, shaping: Shaping = Shaping.STANDARD, render_mode: Optional[str] = None):
+        self.render_mode = render_mode
         """
         Constructor. Inits some internal state, but JsbSimEnv.reset() must be
         called first before interacting with environment.
@@ -53,6 +54,8 @@ class JsbSimEnv(gym.Env):
         self.step_delay = None
 
     def step(self, action: np.ndarray) -> Tuple[np.ndarray, float, bool, Dict]:
+        if self.render_mode == "human":
+            self.render()
         """
         Run one timestep of the environment's dynamics. When end of
         episode is reached, you are responsible for calling `reset()`
@@ -74,6 +77,8 @@ class JsbSimEnv(gym.Env):
         return np.array(state), reward, done, info
 
     def reset(self):
+        if self.render_mode == "human":
+            self.render()
         """
         Resets the state of the environment and returns an initial observation.
 
@@ -98,7 +103,8 @@ class JsbSimEnv(gym.Env):
                           aircraft=aircraft,
                           init_conditions=initial_conditions)
 
-    def render(self, mode='flightgear', flightgear_blocking=True):
+    def render(self, flightgear_blocking=True):
+        mode = self.render_mode
         """Renders the environment.
         The set of supported modes varies per environment. (And some
         environments do not support rendering at all.) By convention,
@@ -182,8 +188,9 @@ class NoFGJsbSimEnv(JsbSimEnv):
                           init_conditions=initial_conditions,
                           allow_flightgear_output=False)
 
-    def render(self, mode='human', flightgear_blocking=True):
+    def render(self, flightgear_blocking=True):
+        mode = self.render_mode
         if mode == 'flightgear':
             raise ValueError('flightgear rendering is disabled for this class')
         else:
-            super().render(mode, flightgear_blocking)
+            super().render(flightgear_blocking)

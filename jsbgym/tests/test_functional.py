@@ -1,6 +1,6 @@
 import unittest
 import numpy as np
-import gym
+import gymnasium as gym
 from jsbgym import utils
 from jsbgym.agents import RandomAgent
 from jsbgym.environment import JsbSimEnv
