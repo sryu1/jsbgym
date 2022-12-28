@@ -73,7 +73,7 @@ env = gym.make('JSBSim-TurnHeadingControlTask-Cessna172P-Shaping.STANDARD-NoFG-v
 
 ### 2D
 
-A basic plot of agent actions and current state information can be using `human` render mode by calling `env.render(mode='human')`.
+A basic plot of agent actions and current state information can be using `human` render mode by calling `env.render()`.
 
 ### 3D
 

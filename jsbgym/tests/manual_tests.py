@@ -37,7 +37,7 @@ class TestJsbSimInstance(unittest.TestCase):
             action = self.env.action_space.sample()
             obs, _, _, _ = self.env.step(action=action)
             if i % render_every == 0:
-                self.env.render(mode='human')
+                self.env.render()
 
     def test_render_steady_level_flight_random(self):
         """ Runs steady level flight task with a random agent. """
@@ -53,7 +53,7 @@ class TestJsbSimInstance(unittest.TestCase):
             state, reward, done, info = self.env.step(action)
             ep_reward += reward
             if step_number % render_every == 0:
-                self.env.render(mode='human')
+                self.env.render()
             step_number += 1
 
     def test_run_episode_steady_level_flight_no_render(self):

@@ -110,7 +110,7 @@ class TestJsbSimEnv(unittest.TestCase):
             self.validate_action_made(action2)
 
     def test_figure_created_closed(self):
-        self.env.render(mode='human')
+        self.env.render()
         self.assertIsInstance(self.env.figure_visualiser.figure, plt.Figure)
         self.env.close()
         self.assertIsNone(self.env.figure_visualiser.figure)
@@ -119,24 +119,24 @@ class TestJsbSimEnv(unittest.TestCase):
         # note: this checks that plot works without throwing exception
         # correctness of plot must be checked in appropriate manual_test
         self.setUp()
-        self.env.render(mode='human')
+        self.env.render()
 
         action = np.array([0.0] * len(self.env.task.action_variables))
         # repeat action several times
         for _ in range(3):
             obs, _, _, _ = self.env.step(action)
-            self.env.render(mode='human')
+            self.env.render()
 
     def test_plot_actions(self):
         # note: this checks that plot works without throwing exception
         # correctness of plot must be checked in appropriate manual_test
-        self.env.render(mode='human')
+        self.env.render()
 
         # repeat action several times
         for _ in range(3):
             action = self.env.action_space.sample()
             _, _, _, _ = self.env.step(action)
-            self.env.render(mode='human')
+            self.env.render()
 
     def test_asl_agl_elevations_equal(self):
         # we want the height above sea level to equal ground elevation at all times
