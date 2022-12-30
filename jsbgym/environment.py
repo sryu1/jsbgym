@@ -77,8 +77,7 @@ class JsbSimEnv(gym.Env):
         return np.array(state), reward, done, info
 
     def reset(self):
-        if self.render_mode == "human":
-            self.render()
+        
         """
         Resets the state of the environment and returns an initial observation.
 
@@ -95,7 +94,8 @@ class JsbSimEnv(gym.Env):
 
         if self.flightgear_visualiser:
             self.flightgear_visualiser.configure_simulation_output(self.sim)
-
+        if self.render_mode == "human":
+            self.render()
         return np.array(state)
 
     def _init_new_sim(self, dt, aircraft, initial_conditions):
@@ -138,7 +138,7 @@ class JsbSimEnv(gym.Env):
                                                                   flightgear_blocking)
             self.flightgear_visualiser.plot(self.sim)
         else:
-            super().render(mode=mode)
+            super().render()
 
     def close(self):
         """ Cleans up this environment's objects

@@ -42,7 +42,6 @@ INCLUDES
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
 
 #include <memory>
-#include <random>
 
 #include "models/FGPropagate.h"
 #include "models/FGOutput.h"
@@ -519,9 +518,10 @@ public:
   *   A string is returned that contains a carriage return delimited list of all
   *   strings in the property catalog that matches the supplied check string.
   *   @param check The string to search for in the property catalog.
+  *   @param end_of_line End of line (CR+LF if needed for Windows).
   *   @return the carriage-return-delimited string containing all matching strings
   *               in the catalog.  */
-  std::string QueryPropertyCatalog(const std::string& check);
+  std::string QueryPropertyCatalog(const std::string& check, const std::string& end_of_line="\n");
 
   // Print the contents of the property catalog for the loaded aircraft.
   void PrintPropertyCatalog(void);
@@ -616,8 +616,8 @@ public:
     TemplateFunctions[name] = new FGTemplateFunc(this, el);
   }
 
-  const std::shared_ptr<std::default_random_engine>& GetRandomEngine(void) const
-  { return RandomEngine; }
+  const std::shared_ptr<RandomNumberGenerator>& GetRandomGenerator(void) const
+  { return RandomGenerator; }
 
 private:
   unsigned int Frame;
@@ -675,8 +675,8 @@ private:
 
   bool HoldDown;
 
-  int RandomSeed;
-  std::shared_ptr<std::default_random_engine> RandomEngine;
+  unsigned int RandomSeed;
+  std::shared_ptr<RandomNumberGenerator> RandomGenerator;
 
   // The FDM counter is used to give each child FDM an unique ID. The root FDM
   // has the ID 0

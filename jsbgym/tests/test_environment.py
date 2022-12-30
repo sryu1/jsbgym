@@ -150,7 +150,7 @@ class TestJsbSimEnv(unittest.TestCase):
 
     def test_render_flightgear_mode(self):
         self.setUp()
-        self.env.render(mode='flightgear', flightgear_blocking=False)
+        self.env.render(flightgear_blocking=False)
         self.assertIsInstance(
             self.env.flightgear_visualiser, FlightGearVisualiser)
         self.env.close()
@@ -164,7 +164,7 @@ class TestNoFlightGearJsbSimEnv(TestJsbSimEnv):
 
     def test_render_flightgear_mode(self):
         with self.assertRaises(ValueError):
-            self.env.render(mode='flightgear')
+            self.env.render()
 
 
 class TestGymRegistration(unittest.TestCase):
