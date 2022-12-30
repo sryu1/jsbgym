@@ -21,7 +21,10 @@ class JsbSimEnv(gym.Env):
     docstrings have been adapted or copied from the OpenAI Gym source code.
     """
     JSBSIM_DT_HZ: int = 60  # JSBSim integration frequency
-    metadata = {"render_modes": ["human", "flightgear"]}
+    metadata = {
+        "render_modes": ["human", "flightgear"],
+        "render_fps": 30
+    }
 
     def __init__(self, task_type: Type[HeadingControlTask], aircraft: Aircraft = cessna172P,
                  agent_interaction_freq: int = 5, shaping: Shaping = Shaping.STANDARD, render_mode: Optional[str] = None):
@@ -77,7 +80,6 @@ class JsbSimEnv(gym.Env):
         return np.array(state), reward, done, info
 
     def reset(self):
-        
         """
         Resets the state of the environment and returns an initial observation.
 
@@ -94,9 +96,10 @@ class JsbSimEnv(gym.Env):
 
         if self.flightgear_visualiser:
             self.flightgear_visualiser.configure_simulation_output(self.sim)
+        info = {}
         if self.render_mode == "human":
             self.render()
-        return np.array(state)
+        return np.array(state), info
 
     def _init_new_sim(self, dt, aircraft, initial_conditions):
         return Simulation(sim_frequency_hz=dt,
@@ -180,7 +183,7 @@ class NoFGJsbSimEnv(JsbSimEnv):
     to open a new socket for every single episode, eventually leading to
     failure of the network.
     """
-    metadata = {"render_modes": ["human"]}
+    metadata = {"render_modes": ["human"], "render_fps": 30}
 
     def _init_new_sim(self, dt: float, aircraft: Aircraft, initial_conditions: Dict):
         return Simulation(sim_frequency_hz=dt,
