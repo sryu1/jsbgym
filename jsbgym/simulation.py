@@ -33,7 +33,7 @@ class Simulation(object):
         :param allow_flightgear_output: bool, loads a config file instructing
             JSBSim to connect to an output socket if True.
         """
-        self.jsbsim = jsbsim.FGFDMExec(root_dir=self.ROOT_DIR)
+        self.jsbsim = jsbsim.FGFDMExec(None)#(root_dir=self.ROOT_DIR)
         self.jsbsim.set_debug_level(0)
         if allow_flightgear_output:
             flightgear_output_config = os.path.join(os.path.dirname(os.path.abspath(__file__)),
@@ -57,6 +57,7 @@ class Simulation(object):
         :return: float
         """
         return self.jsbsim[prop.name]
+    __getitem__()
 
     def __setitem__(self, prop: Union[prp.BoundedProperty, prp.Property], value) -> None:
         """
