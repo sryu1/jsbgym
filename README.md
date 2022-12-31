@@ -1,5 +1,5 @@
 # JSBGym
-**THIS DOES NOT WORK AS EXPECTED YET**
+**Some features will not work properly yet, as gym in being converted to gymnasium**
 
 JSBGym provides reinforcement learning environments for the control of fixed-wing aircraft using the JSBSim flight dynamics model. JSBGym requires at least Python 3.7.
 
