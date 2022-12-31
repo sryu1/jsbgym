@@ -11,6 +11,7 @@ setup(name='jsbgym',
       install_requires=[
           'numpy',
           'gymnasium',
+          'jsbsim',
           'matplotlib',
       ],
       packages=find_packages(),

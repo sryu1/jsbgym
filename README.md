@@ -1,28 +1,12 @@
 # JSBGym
+
 **Some features will not work properly yet, as gym in being converted to gymnasium**
 
 JSBGym provides reinforcement learning environments for the control of fixed-wing aircraft using the JSBSim flight dynamics model. JSBGym requires at least Python 3.7.
 
-The package's environments implement the OpenAI Gym interface allowing environments to be created and interacted with in the usual way, e.g.:
+The package's environments implement the Farama-Foundation's Gymnasium interface allowing environments to be created and interacted with in the usual way.
 
-```python
-import gymnasium as gym
-import jsbgym
-
-env = gym.make(ENV_ID)
-env.reset()
-state, reward, done, info = env.step(action)
-```
-
-JSBGym optionally provides 3D visualisation of controlled aircraft using the FlightGear simulator.
-
-## Dependencies
-
-* [JSBSim](https://github.com/JSBSim-Team/jsbsim) flight dynamics model, including the C++ and Python libraries
-* FlightGear simulator (optional for visualisation)
-* gymnasium, numpy, matplotlib
-
-## Installation
+## Setup
 
 Firstly, follow the instructions on the [JSBSim](https://github.com/JSBSim-Team/jsbsim) repository to install JSBSim and its libraries.
 
@@ -38,6 +22,28 @@ and confirm that its Python library is correctly installed from a Python interpr
 ```python
 import jsbsim
 ```
+
+After that, go to the folder where JSBSim was installed and copy the entire folder, and paste it into your project folder.
+
+## Getting Started
+
+```python
+import gymnasium as gym
+import jsbsim
+import jsbgym
+
+env = gym.make(ENV_ID)
+env.reset()
+state, reward, done, info = env.step(action)
+```
+
+JSBGym optionally provides 3D visualisation of controlled aircraft using the FlightGear simulator.
+
+## Dependencies
+
+* [JSBSim](https://github.com/JSBSim-Team/jsbsim) flight dynamics model, including the C++ and Python libraries
+* FlightGear simulator (optional for visualisation)
+* gymnasium, numpy, matplotlib
 
 JSBGym is pip installable using its GitHub:
 

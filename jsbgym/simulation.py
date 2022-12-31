@@ -57,7 +57,6 @@ class Simulation(object):
         :return: float
         """
         return self.jsbsim[prop.name]
-    __getitem__()
 
     def __setitem__(self, prop: Union[prp.BoundedProperty, prp.Property], value) -> None:
         """
