@@ -9,7 +9,7 @@ import jsbgym.properties as prp
 
 
 class AgentEnvInteractionTest(unittest.TestCase):
-    """ Tests for agents interacting with env. """
+    """Tests for agents interacting with env."""
 
     def init_and_reset_env(self, env: JsbSimEnv):
         self.assertIsInstance(env.task, HeadingControlTask)
@@ -28,8 +28,7 @@ class AgentEnvInteractionTest(unittest.TestCase):
         # we see that the action space has the correct low and high range of +-1.0
         expect_low = np.array([-1.0] * expected_num_actions)
         expect_high = np.array([1.0] * expected_num_actions)
-        np.testing.assert_array_almost_equal(
-            expect_high, env.action_space.high)
+        np.testing.assert_array_almost_equal(expect_high, env.action_space.high)
         np.testing.assert_array_almost_equal(expect_low, env.action_space.low)
 
         # we reset the env and receive the first state; the env is now ready
@@ -52,12 +51,13 @@ class AgentEnvInteractionTest(unittest.TestCase):
 
         # we see the state has changed
         self.assertEqual(first_state.shape, state.shape)
-        self.assertTrue(np.any(np.not_equal(first_state, state)),
-                        msg='state should have changed after simulation step')
+        self.assertTrue(
+            np.any(np.not_equal(first_state, state)),
+            msg="state should have changed after simulation step",
+        )
         expected_time_step_size = env.sim_steps_per_agent_step / env.JSBSIM_DT_HZ
         self.assertAlmostEqual(expected_time_step_size, env.sim.get_sim_time())
-        self.assertFalse(
-            done, msg='episode is terminal after only a single step')
+        self.assertFalse(done, msg="episode is terminal after only a single step")
 
         # the aircraft engines are running, as per initial conditions
         self.assertNotAlmostEqual(env.sim[prp.engine_thrust_lbs], 0)

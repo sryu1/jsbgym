@@ -11,8 +11,9 @@ class AttributeFormatter(object):
 
     Used through its static method, translate()
     """
-    ILLEGAL_CHARS = '\-/.'
-    TRANSLATE_TO = '_' * len(ILLEGAL_CHARS)
+
+    ILLEGAL_CHARS = "\-/."
+    TRANSLATE_TO = "_" * len(ILLEGAL_CHARS)
     TRANSLATION_TABLE = str.maketrans(ILLEGAL_CHARS, TRANSLATE_TO)
 
     @staticmethod
@@ -28,16 +29,16 @@ def get_env_id(task_type, aircraft, shaping, enable_flightgear) -> str:
     :param aircraft: Aircraft namedtuple, the aircraft to be flown
     :param shaping: HeadingControlTask.Shaping enum, the reward shaping setting
     :param enable_flightgear: True if FlightGear simulator is enabled for visualisation else False
-     """
+    """
     if enable_flightgear:
-        fg_setting = 'FG'
+        fg_setting = "FG"
     else:
-        fg_setting = 'NoFG'
-    return f'JSBSim-{task_type.__name__}-{aircraft.name}-{shaping}-{fg_setting}-v0'
+        fg_setting = "NoFG"
+    return f"JSBSim-{task_type.__name__}-{aircraft.name}-{shaping}-{fg_setting}-v0"
 
 
 def get_env_id_kwargs_map() -> Dict[str, Tuple]:
-    """ Returns all environment IDs mapped to tuple of (task, aircraft, shaping, flightgear) """
+    """Returns all environment IDs mapped to tuple of (task, aircraft, shaping, flightgear)"""
     # lazy import to avoid circular dependencies
     from jsbgym.tasks import Shaping, HeadingControlTask, TurnHeadingControlTask
 
@@ -46,8 +47,7 @@ def get_env_id_kwargs_map() -> Dict[str, Tuple]:
         for plane in (cessna172P, a320, f15):
             for shaping in (Shaping.STANDARD, Shaping.EXTRA, Shaping.EXTRA_SEQUENTIAL):
                 for enable_flightgear in (True, False):
-                    id = get_env_id(task_type, plane, shaping,
-                                    enable_flightgear)
+                    id = get_env_id(task_type, plane, shaping, enable_flightgear)
                     assert id not in map
                     map[id] = (task_type, plane, shaping, enable_flightgear)
     return map
@@ -64,7 +64,7 @@ def product(iterable: Iterable):
 
 
 def reduce_reflex_angle_deg(angle: float) -> float:
-    """ Given an angle in degrees, normalises in [-179, 180] """
+    """Given an angle in degrees, normalises in [-179, 180]"""
     # ATTRIBUTION: solution from James Polk on SO,
     # https://stackoverflow.com/questions/2320986/easy-way-to-keeping-angles-between-179-and-180-degrees#
     new_angle = angle % 360

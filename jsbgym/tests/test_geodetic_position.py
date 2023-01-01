@@ -20,10 +20,12 @@ class TestGeodeticPosition(unittest.TestCase):
         north_heading_deg = south_position.heading_deg_to(north_position)
         south_heading_deg = north_position.heading_deg_to(south_position)
 
-        self.assertAlmostEqual(0, north_heading_deg,
-                               places=self.heading_accuracy_places)
-        self.assertAlmostEqual(180, south_heading_deg,
-                               places=self.heading_accuracy_places)
+        self.assertAlmostEqual(
+            0, north_heading_deg, places=self.heading_accuracy_places
+        )
+        self.assertAlmostEqual(
+            180, south_heading_deg, places=self.heading_accuracy_places
+        )
 
     def test_heading_deg_to_east_and_west(self):
         lat, lng = self.BATH_LAT, self.BATH_LNG
@@ -34,10 +36,12 @@ class TestGeodeticPosition(unittest.TestCase):
         east_heading_deg = west_position.heading_deg_to(east_position)
         west_heading_deg = east_position.heading_deg_to(west_position)
 
-        self.assertAlmostEqual(90, east_heading_deg,
-                               places=self.heading_accuracy_places)
-        self.assertAlmostEqual(270, west_heading_deg,
-                               places=self.heading_accuracy_places)
+        self.assertAlmostEqual(
+            90, east_heading_deg, places=self.heading_accuracy_places
+        )
+        self.assertAlmostEqual(
+            270, west_heading_deg, places=self.heading_accuracy_places
+        )
 
     def test_heading_deg_ne_and_sw(self):
         lat, lng = self.BATH_LAT, self.BATH_LNG
@@ -45,12 +49,12 @@ class TestGeodeticPosition(unittest.TestCase):
         north_east_position = GeodeticPosition(north_lat, east_lng)
         south_west_position = GeodeticPosition(lat, lng)
 
-        north_east_heading_deg = south_west_position.heading_deg_to(
-            north_east_position)
-        south_west_heading_deg = north_east_position.heading_deg_to(
-            south_west_position)
+        north_east_heading_deg = south_west_position.heading_deg_to(north_east_position)
+        south_west_heading_deg = north_east_position.heading_deg_to(south_west_position)
 
-        self.assertAlmostEqual(45, north_east_heading_deg,
-                               places=self.heading_accuracy_places)
-        self.assertAlmostEqual(225, south_west_heading_deg,
-                               places=self.heading_accuracy_places)
+        self.assertAlmostEqual(
+            45, north_east_heading_deg, places=self.heading_accuracy_places
+        )
+        self.assertAlmostEqual(
+            225, south_west_heading_deg, places=self.heading_accuracy_places
+        )

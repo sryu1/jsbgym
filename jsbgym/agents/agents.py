@@ -15,7 +15,7 @@ class Agent(ABC):
 
 
 class RandomAgent(Agent):
-    """ An agent that selects random actions.
+    """An agent that selects random actions.
 
     The Random object making selection is gym.np_random used by the
     Space.sample() method. Its seed is set by gym.

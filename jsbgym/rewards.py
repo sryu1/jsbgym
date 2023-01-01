@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 from typing import Tuple, Union
 from jsbgym.utils import reduce_reflex_angle_deg
 
-State = 'tasks.FlightTask.State'  # alias for type hint
+State = "tasks.FlightTask.State"  # alias for type hint
 
 
 class Reward(object):
@@ -22,18 +22,18 @@ class Reward(object):
         self.base_reward_elements = base_reward_elements
         self.shaping_reward_elements = shaping_reward_elements
         if not self.base_reward_elements:
-            raise ValueError('base agent_reward cannot be empty')
+            raise ValueError("base agent_reward cannot be empty")
 
     def agent_reward(self) -> float:
-        """ Returns scalar reward value by taking mean of all reward elements """
-        sum_reward = sum(self.base_reward_elements) + \
-            sum(self.shaping_reward_elements)
-        num_reward_components = len(
-            self.base_reward_elements) + len(self.shaping_reward_elements)
+        """Returns scalar reward value by taking mean of all reward elements"""
+        sum_reward = sum(self.base_reward_elements) + sum(self.shaping_reward_elements)
+        num_reward_components = len(self.base_reward_elements) + len(
+            self.shaping_reward_elements
+        )
         return sum_reward / num_reward_components
 
     def assessment_reward(self) -> float:
-        """ Returns scalar non-shaping reward by taking mean of base reward elements. """
+        """Returns scalar non-shaping reward by taking mean of base reward elements."""
         return sum(self.base_reward_elements) / len(self.base_reward_elements)
 
     def is_shaping(self):
@@ -41,7 +41,7 @@ class Reward(object):
 
 
 class RewardComponent(ABC):
-    """ Interface for RewardComponent, an object which calculates one component value of a Reward """
+    """Interface for RewardComponent, an object which calculates one component value of a Reward"""
 
     @abstractmethod
     def calculate(self, state: State, last_state: State, is_terminal: bool) -> float:
@@ -66,14 +66,17 @@ class NormalisedComponent(RewardComponent, ABC):
 
     All potentials of subclasses should be normalised in [0.0, 1.0]
     """
+
     POTENTIAL_BASED_DIFFERENCE_TERMINAL_VALUE = 0.0
 
-    def __init__(self,
-                 name: str,
-                 prop: prp.BoundedProperty,
-                 state_variables: Tuple[prp.BoundedProperty],
-                 target: Union[int, float, prp.Property, prp.BoundedProperty],
-                 potential_difference_based: bool):
+    def __init__(
+        self,
+        name: str,
+        prop: prp.BoundedProperty,
+        state_variables: Tuple[prp.BoundedProperty],
+        target: Union[int, float, prp.Property, prp.BoundedProperty],
+        potential_difference_based: bool,
+    ):
         """
         Constructor.
 
@@ -91,8 +94,11 @@ class NormalisedComponent(RewardComponent, ABC):
         self.potential_difference_based = potential_difference_based
         self._set_target(target, state_variables)
 
-    def _set_target(self, target: Union[int, float, prp.Property, prp.BoundedProperty],
-                    state_variables: Tuple[prp.BoundedProperty]) -> None:
+    def _set_target(
+        self,
+        target: Union[int, float, prp.Property, prp.BoundedProperty],
+        state_variables: Tuple[prp.BoundedProperty],
+    ) -> None:
         """
         Sets the target value or an index for retrieving it from States
 
@@ -102,7 +108,9 @@ class NormalisedComponent(RewardComponent, ABC):
         if isinstance(target, float) or isinstance(target, int):
             self.constant_target = True
             self.target = target
-        elif isinstance(target, prp.Property) or isinstance(target, prp.BoundedProperty):
+        elif isinstance(target, prp.Property) or isinstance(
+            target, prp.BoundedProperty
+        ):
             self.constant_target = False
             self.target_index = state_variables.index(target)
 
@@ -116,8 +124,9 @@ class NormalisedComponent(RewardComponent, ABC):
         """
         if self.potential_difference_based:
             # reward is a potential difference of state, prev_state
-            reward = self.get_potential(
-                state, is_terminal) - self.get_potential(prev_state, False)
+            reward = self.get_potential(state, is_terminal) - self.get_potential(
+                prev_state, False
+            )
         else:
             reward = self.get_potential(state, is_terminal)
         return reward
@@ -181,13 +190,15 @@ class AsymptoticErrorComponent(ErrorComponent):
     to worry about the bounds on the absolute error value.
     """
 
-    def __init__(self,
-                 name: str,
-                 prop: prp.BoundedProperty,
-                 state_variables: Tuple[prp.BoundedProperty],
-                 target: Union[int, float, prp.Property, prp.BoundedProperty],
-                 is_potential_based: bool,
-                 scaling_factor: Union[float, int]):
+    def __init__(
+        self,
+        name: str,
+        prop: prp.BoundedProperty,
+        state_variables: Tuple[prp.BoundedProperty],
+        target: Union[int, float, prp.Property, prp.BoundedProperty],
+        is_potential_based: bool,
+        scaling_factor: Union[float, int],
+    ):
         """
         Constructor.
 
@@ -235,13 +246,15 @@ class LinearErrorComponent(ErrorComponent):
     interest and its target. The error must be in the interval [0, scaling_factor].
     """
 
-    def __init__(self,
-                 name: str,
-                 prop: prp.BoundedProperty,
-                 state_variables: Tuple[prp.BoundedProperty],
-                 target: Union[int, float, prp.Property, prp.BoundedProperty],
-                 is_potential_based: bool,
-                 scaling_factor: Union[float, int]):
+    def __init__(
+        self,
+        name: str,
+        prop: prp.BoundedProperty,
+        state_variables: Tuple[prp.BoundedProperty],
+        target: Union[int, float, prp.Property, prp.BoundedProperty],
+        is_potential_based: bool,
+        scaling_factor: Union[float, int],
+    ):
         """
         Constructor.
 
@@ -266,8 +279,9 @@ def normalise_error_asymptotic(absolute_error: float, scaling_factor: float) -> 
     When absolute_error == scaling_factor, the normalised error is equal to 0.5
     """
     if absolute_error < 0:
-        raise ValueError(f'Error to be normalised must be non-negative '
-                         f': {absolute_error}')
+        raise ValueError(
+            f"Error to be normalised must be non-negative " f": {absolute_error}"
+        )
     scaled_error = absolute_error / scaling_factor
     return scaled_error / (scaled_error + 1)
 
@@ -279,8 +293,9 @@ def normalise_error_linear(absolute_error: float, max_error: float) -> float:
     If absolute_error exceeds max_error, it is capped back to max_error
     """
     if absolute_error < 0:
-        raise ValueError(f'Error to be normalised must be non-negative '
-                         f': {absolute_error}')
+        raise ValueError(
+            f"Error to be normalised must be non-negative " f": {absolute_error}"
+        )
     elif absolute_error > max_error:
         return 1.0
     else:

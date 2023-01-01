@@ -11,17 +11,20 @@ class Simulation(object):
     """
     A class which wraps an instance of JSBSim and manages communication with it.
     """
-    encoding = 'utf-8'  # encoding of bytes returned by JSBSim Cython funcs
-    ROOT_DIR = os.path.abspath('JSBSim')
-    OUTPUT_FILE = 'flightgear.xml'
-    LONGITUDINAL = 'longitudinal'
-    FULL = 'full'
 
-    def __init__(self,
-                 sim_frequency_hz: float = 60.0,
-                 aircraft: Aircraft = cessna172P,
-                 init_conditions: Dict[prp.Property, float] = None,
-                 allow_flightgear_output: bool = True):
+    encoding = "utf-8"  # encoding of bytes returned by JSBSim Cython funcs
+    ROOT_DIR = os.path.abspath("JSBSim")
+    OUTPUT_FILE = "flightgear.xml"
+    LONGITUDINAL = "longitudinal"
+    FULL = "full"
+
+    def __init__(
+        self,
+        sim_frequency_hz: float = 60.0,
+        aircraft: Aircraft = cessna172P,
+        init_conditions: Dict[prp.Property, float] = None,
+        allow_flightgear_output: bool = True,
+    ):
         """
         Constructor. Creates an instance of JSBSim and sets initial conditions.
 
@@ -36,8 +39,9 @@ class Simulation(object):
         self.jsbsim = jsbsim.FGFDMExec(root_dir=self.ROOT_DIR)
         self.jsbsim.set_debug_level(0)
         if allow_flightgear_output:
-            flightgear_output_config = os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                                                    self.OUTPUT_FILE)
+            flightgear_output_config = os.path.join(
+                os.path.dirname(os.path.abspath(__file__)), self.OUTPUT_FILE
+            )
             self.jsbsim.set_output_directive(flightgear_output_config)
         self.sim_dt = 1.0 / sim_frequency_hz
         self.aircraft = aircraft
@@ -58,7 +62,9 @@ class Simulation(object):
         """
         return self.jsbsim[prop.name]
 
-    def __setitem__(self, prop: Union[prp.BoundedProperty, prp.Property], value) -> None:
+    def __setitem__(
+        self, prop: Union[prp.BoundedProperty, prp.Property], value
+    ) -> None:
         """
         Sets simulation property to specified value.
 
@@ -87,8 +93,9 @@ class Simulation(object):
         load_success = self.jsbsim.load_model(model_name)
 
         if not load_success:
-            raise RuntimeError('JSBSim could not find specified model_name: '
-                               + model_name)
+            raise RuntimeError(
+                "JSBSim could not find specified model_name: " + model_name
+            )
 
     def get_aircraft(self) -> Aircraft:
         """
@@ -111,11 +118,15 @@ class Simulation(object):
             return None
 
     def get_sim_time(self) -> float:
-        """ Gets the simulation time from JSBSim, a float. """
-        return self.jsbsim['simulation/sim-time-sec']
+        """Gets the simulation time from JSBSim, a float."""
+        return self.jsbsim["simulation/sim-time-sec"]
 
-    def initialise(self, dt: float, model_name: str,
-                   init_conditions: Dict['prp.Property', float] = None) -> None:
+    def initialise(
+        self,
+        dt: float,
+        model_name: str,
+        init_conditions: Dict["prp.Property", float] = None,
+    ) -> None:
         """
         Loads an aircraft and initialises simulation conditions.
 
@@ -130,12 +141,11 @@ class Simulation(object):
         """
         if init_conditions is not None:
             # if we are specifying conditions, load a minimal file
-            ic_file = 'minimal_ic.xml'
+            ic_file = "minimal_ic.xml"
         else:
-            ic_file = 'basic_ic.xml'
+            ic_file = "basic_ic.xml"
 
-        ic_path = os.path.join(os.path.dirname(
-            os.path.abspath(__file__)), ic_file)
+        ic_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), ic_file)
         self.jsbsim.load_ic(ic_path, useStoredPath=False)
         self.load_model(model_name)
         self.jsbsim.set_dt(dt)
@@ -147,15 +157,16 @@ class Simulation(object):
 
         success = self.jsbsim.run_ic()
         if not success:
-            raise RuntimeError('JSBSim failed to init simulation conditions.')
+            raise RuntimeError("JSBSim failed to init simulation conditions.")
 
-    def set_custom_initial_conditions(self,
-                                      init_conditions: Dict['prp.Property', float] = None) -> None:
+    def set_custom_initial_conditions(
+        self, init_conditions: Dict["prp.Property", float] = None
+    ) -> None:
         if init_conditions is not None:
             for prop, value in init_conditions.items():
                 self[prop] = value
 
-    def reinitialise(self, init_conditions: Dict['prp.Property', float] = None) -> None:
+    def reinitialise(self, init_conditions: Dict["prp.Property", float] = None) -> None:
         """
         Resets JSBSim to initial conditions.
 
@@ -191,7 +202,7 @@ class Simulation(object):
         self.jsbsim.disable_output()
 
     def close(self):
-        """ Closes the simulation and any plots. """
+        """Closes the simulation and any plots."""
         if self.jsbsim:
             self.jsbsim = None
 
@@ -208,12 +219,12 @@ class Simulation(object):
         if time_factor is None:
             self.wall_clock_dt = None
         elif time_factor <= 0:
-            raise ValueError('time factor must be positive and non-zero')
+            raise ValueError("time factor must be positive and non-zero")
         else:
             self.wall_clock_dt = self.sim_dt / time_factor
 
     def start_engines(self):
-        """ Sets all engines running. """
+        """Sets all engines running."""
         self[prp.all_engine_running] = -1
 
     def set_throttle_mixture_controls(self, throttle_cmd: float, mixture_cmd: float):
@@ -233,6 +244,6 @@ class Simulation(object):
             pass  # must be single-control aircraft
 
     def raise_landing_gear(self):
-        """ Raises all aircraft landing gear. """
+        """Raises all aircraft landing gear."""
         self[prp.gear] = 0.0
         self[prp.gear_all_cmd] = 0.0
