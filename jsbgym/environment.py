@@ -31,8 +31,10 @@ class JsbSimEnv(gym.Env):
         agent_interaction_freq: int = 5,
         shaping: Shaping = Shaping.STANDARD,
         render_mode: Optional[str] = None,
+        seed: Optional[int] = None
     ):
         self.render_mode = render_mode
+        self.seed = seed
         """
         Constructor. Inits some internal state, but JsbSimEnv.reset() must be
         called first before interacting with environment.
@@ -88,22 +90,18 @@ class JsbSimEnv(gym.Env):
 
         return state, reward, done, info
 
-    def reset(self, seed: Optional[int] = None) -> np.ndarray:
-        """
-        Reset the state of the environment and returns an initial observation.
-
-        :param seed: int, seed for the random number generator
-        """
+    def reset(self, seed=None):
         dt = 1 / self.JSBSIM_DT_HZ
         initial_conditions = self.task.get_initial_conditions()
-        self.sim = self._init_new_sim(dt, self.aircraft, initial_conditions, seed)
+        self.sim = self._init_new_sim(dt, self.aircraft, initial_conditions, seed=seed)
         self.figure_visualiser = FigureVisualiser(
             dt=dt, aircraft=self.aircraft, sim=self.sim
         )
         self.flightgear_visualiser = FlightGearVisualiser(
             dt=dt, aircraft=self.aircraft, sim=self.sim
         )
-        return self.task.get_initial_state(self.sim)
+        self.step_delay = 1 / self.metadata["render_fps"]
+        return self.task.reset(self.sim)
 
     def render(self, flightgear_blocking=True):
         mode = self.render_mode
@@ -118,19 +116,15 @@ class JsbSimEnv(gym.Env):
         elif self.render_mode == "human":
             self.figure_visualiser.close()
 
-    def _init_new_sim(
-        self,
-        dt: float,
-        aircraft: Aircraft,
-        initial_conditions: Dict,
-        seed: Optional[int] = None,
-    ):
+    def _init_new_sim(self, dt, aircraft, initial_conditions, seed=None):
         return Simulation(
             sim_frequency_hz=dt,
             aircraft=aircraft,
             init_conditions=initial_conditions,
+            allow_flightgear_output=False,
             seed=seed,
         )
+
 
 
 class NoFGJsbSimEnv(JsbSimEnv):
