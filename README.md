@@ -108,7 +108,7 @@ Visualising with FlightGear requires the Gym to be created with a FlightGear-ena
 env = gym.make('JSBSim-TurnHeadingControlTask-Cessna172P-Shaping.STANDARD-NoFG-v0')
 ```
 
-Then, the first call to `env.render(mode='flightgear')` will launch FlightGear and begin visualisation.
+Then, the first call to `env.render()` will launch FlightGear and begin visualisation.
 
 ## State and Action Space
 
