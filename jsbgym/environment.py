@@ -88,7 +88,7 @@ class JsbSimEnv(gym.Env):
         observation = np.array(state)
         return observation, reward, terminated, False, info
 
-    def reset(self, seed: Optional[int] = None):
+    def reset(self, seed: Optional[int] = None, options: Optional[dict] = None):
         """
         Resets the state of the environment and returns an initial observation.
 
