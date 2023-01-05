@@ -69,25 +69,26 @@ class JsbSimEnv(gym.Env):
         Run one timestep of the environment's dynamics. When end of
         episode is reached, you are responsible for calling `reset()`
         to reset this environment's state.
-        Accepts an action and returns a tuple (observation, reward, done, info).
+        Accepts an action and returns a tuple (observation, reward, terminated, False, info).
 
         :param action: the agent's action, with same length as action variables.
         :return:
             state: agent's observation of the current environment
             reward: amount of reward returned after previous action
-            done: whether the episode has ended, in which case further step() calls are undefined
+            terminated: whether the episode has ended, in which case further step() calls are undefined
+            False: Truncated
             info: auxiliary information, e.g. full reward shaping data
         """
         if action.shape != self.action_space.shape:
             raise ValueError("mismatch between action and action space size")
 
-        state, reward, done, info = self.task.task_step(
+        state, reward, terminated, info = self.task.task_step(
             self.sim, action, self.sim_steps_per_agent_step
         )
         observation = np.array(state)
-        return observation, reward, done, info
+        return observation, reward, terminated, False, info
 
-    def reset(self, seed=None):
+    def reset(self, seed: Optional[int] = None):
         """
         Resets the state of the environment and returns an initial observation.
 
@@ -118,6 +119,15 @@ class JsbSimEnv(gym.Env):
         )
 
     def render(self, flightgear_blocking=True):
+        if self.render_mode is None:
+            assert self.spec is not None
+            gym.logger.warn(
+                "You are calling render method without specifying any render mode. "
+                "You can specify the render_mode at initialization, "
+                f'e.g. gym.make("{self.spec.id}", render_mode="rgb_array")'
+            )
+            return
+
         """Renders the environment.
         The set of supported modes varies per environment. (And some
         environments do not support rendering at all.) By convention,
@@ -189,8 +199,7 @@ class NoFGJsbSimEnv(JsbSimEnv):
         )
 
     def render(self, flightgear_blocking=True):
-        mode = self.render_mode
-        if mode == "flightgear":
+        if self.render_mode == "flightgear":
             raise ValueError("flightgear rendering is disabled for this class")
         else:
             super().render(flightgear_blocking)
