@@ -32,7 +32,6 @@ class JsbSimEnv(gym.Env):
         shaping: Shaping = Shaping.STANDARD,
         render_mode: Optional[str] = None,
     ):
-        self.render_mode = render_mode
         """
         Constructor. Inits some internal state, but JsbSimEnv.reset() must be
         called first before interacting with environment.
@@ -61,6 +60,7 @@ class JsbSimEnv(gym.Env):
         self.figure_visualiser: FigureVisualiser = None
         self.flightgear_visualiser: FlightGearVisualiser = None
         self.step_delay = None
+        self.render_mode = render_mode
 
     def step(self, action: np.ndarray) -> Tuple[np.ndarray, float, bool, Dict]:
         if self.render_mode == "human":
@@ -69,29 +69,31 @@ class JsbSimEnv(gym.Env):
         Run one timestep of the environment's dynamics. When end of
         episode is reached, you are responsible for calling `reset()`
         to reset this environment's state.
-        Accepts an action and returns a tuple (observation, reward, done, info).
+        Accepts an action and returns a tuple (observation, reward, terminated, info).
 
         :param action: the agent's action, with same length as action variables.
         :return:
             state: agent's observation of the current environment
             reward: amount of reward returned after previous action
-            done: whether the episode has ended, in which case further step() calls are undefined
+            terminated: whether the episode has ended, in which case further step() calls are undefined
             info: auxiliary information, e.g. full reward shaping data
         """
         if action.shape != self.action_space.shape:
             raise ValueError("mismatch between action and action space size")
 
-        state, reward, done, info = self.task.task_step(
+        state, reward, terminated, info = self.task.task_step(
             self.sim, action, self.sim_steps_per_agent_step
         )
-        return np.array(state), reward, done, info
+        observation = np.array(state)
+        return observation, reward, terminated, info
 
-    def reset(self):
+    def reset(self, seed=None):
         """
         Resets the state of the environment and returns an initial observation.
 
         :return: array, the initial observation of the space.
         """
+        super().reset(seed=seed)
         init_conditions = self.task.get_initial_conditions()
         if self.sim:
             self.sim.reinitialise(init_conditions)
@@ -104,10 +106,11 @@ class JsbSimEnv(gym.Env):
 
         if self.flightgear_visualiser:
             self.flightgear_visualiser.configure_simulation_output(self.sim)
+        observation = np.array(state)
         info = {}
         if self.render_mode == "human":
             self.render()
-        return np.array(state), info
+        return observation, info
 
     def _init_new_sim(self, dt, aircraft, initial_conditions):
         return Simulation(
@@ -115,7 +118,6 @@ class JsbSimEnv(gym.Env):
         )
 
     def render(self, flightgear_blocking=True):
-        mode = self.render_mode
         """Renders the environment.
         The set of supported modes varies per environment. (And some
         environments do not support rendering at all.) By convention,
@@ -137,13 +139,13 @@ class JsbSimEnv(gym.Env):
         :param flightgear_blocking: waits for FlightGear to load before
             returning if True, else returns immediately
         """
-        if mode == "human":
+        if self.render_mode == "human":
             if not self.figure_visualiser:
                 self.figure_visualiser = FigureVisualiser(
                     self.sim, self.task.get_props_to_output()
                 )
             self.figure_visualiser.plot(self.sim)
-        elif mode == "flightgear":
+        elif self.render_mode == "flightgear":
             if not self.flightgear_visualiser:
                 self.flightgear_visualiser = FlightGearVisualiser(
                     self.sim, self.task.get_props_to_output(), flightgear_blocking
@@ -164,23 +166,6 @@ class JsbSimEnv(gym.Env):
             self.figure_visualiser.close()
         if self.flightgear_visualiser:
             self.flightgear_visualiser.close()
-
-    def seed(self, seed=None):
-        """
-        Sets the seed for this env's random number generator(s).
-        Note:
-            Some environments use multiple pseudorandom number generators.
-            We want to capture all such seeds used in order to ensure that
-            there aren't accidental correlations between multiple generators.
-        Returns:
-            list<bigint>: Returns the list of seeds used in this env's random
-              number generators. The first value in the list should be the
-              "main" seed, or the value which a reproducer should pass to
-              'seed'. Often, the main seed equals the provided 'seed', but
-              this won't be true if seed=None, for example.
-        """
-        gym.logger.warn("Could not seed environment %s", self)
-        return
 
 
 class NoFGJsbSimEnv(JsbSimEnv):

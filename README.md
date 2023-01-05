@@ -37,6 +37,12 @@ import jsbsim
 
 After that, go to the folder where JSBSim was installed and copy the entire folder, and paste it into your project folder.
 
+Also install gymnasium and jsbgym
+
+```console
+pip install gymnasium, git+https://github.com/sryu1/jsbgym
+```
+
 ## Getting Started
 
 ```python
@@ -46,7 +52,7 @@ import jsbgym
 
 env = gym.make(ENV_ID)
 env.reset()
-state, reward, done, info = env.step(action)
+state, reward, terminated, info = env.step(action)
 ```
 
 JSBGym optionally provides 3D visualisation of controlled aircraft using the FlightGear simulator.
@@ -56,12 +62,6 @@ JSBGym optionally provides 3D visualisation of controlled aircraft using the Fli
 * [JSBSim](https://github.com/JSBSim-Team/jsbsim) flight dynamics model, including the C++ and Python libraries
 * FlightGear simulator (optional for visualisation)
 * gymnasium, numpy, matplotlib
-
-JSBGym is pip installable using its GitHub:
-
-```console
-pip install git+https://github.com/sryu1/jsbgym
-```
 
 ## Environments
 
@@ -105,10 +105,10 @@ fgfs --version
 Visualising with FlightGear requires the Gym to be created with a FlightGear-enabled environment ID by changing 'NoFG' -> 'FG'. For example,
 
 ```python
-env = gym.make('JSBSim-TurnHeadingControlTask-Cessna172P-Shaping.STANDARD-NoFG-v0')
+env = gym.make('JSBSim-TurnHeadingControlTask-Cessna172P-Shaping.STANDARD-NoFG-v0', render_mode="flightgear)
 ```
 
-Then, the first call to `env.render(mode='flightgear')` will launch FlightGear and begin visualisation.
+Then, the first call to `env.render()` will launch FlightGear and begin visualisation.
 
 ## State and Action Space
 
