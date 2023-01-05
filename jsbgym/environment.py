@@ -69,23 +69,23 @@ class JsbSimEnv(gym.Env):
         Run one timestep of the environment's dynamics. When end of
         episode is reached, you are responsible for calling `reset()`
         to reset this environment's state.
-        Accepts an action and returns a tuple (observation, reward, terminated, info).
+        Accepts an action and returns a tuple (observation, reward, done, info).
 
         :param action: the agent's action, with same length as action variables.
         :return:
             state: agent's observation of the current environment
             reward: amount of reward returned after previous action
-            terminated: whether the episode has ended, in which case further step() calls are undefined
+            done: whether the episode has ended, in which case further step() calls are undefined
             info: auxiliary information, e.g. full reward shaping data
         """
         if action.shape != self.action_space.shape:
             raise ValueError("mismatch between action and action space size")
 
-        state, reward, terminated, info = self.task.task_step(
+        state, reward, done, info = self.task.task_step(
             self.sim, action, self.sim_steps_per_agent_step
         )
         observation = np.array(state)
-        return observation, reward, terminated, info
+        return observation, reward, done, info
 
     def reset(self, seed=None):
         """

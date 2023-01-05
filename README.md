@@ -85,7 +85,7 @@ f'JSBSim-{task}-{aircraft}-SHAPING_STANDARD-NoFG-v0'
 For example, to fly a Cessna on the TurnHeadingControl task,
 
 ```python
-env = gym.make('JSBSim-TurnHeadingControlTask-Cessna172P-Shaping.STANDARD-NoFG-v0')
+env = gym.make('JSBSim-TurnHeadingControlTask-Cessna172P-Shaping.STANDARD-NoFG-v0', render_mode="human")
 ```
 
 ## Visualisation
