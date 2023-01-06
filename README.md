@@ -2,7 +2,11 @@
 
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
+## Current Progress
+
 **Some features will not work properly yet, as gym in being converted to gymnasium**
+
+Render mode "human" works, "flightgear" is not working
 
 JSBGym provides reinforcement learning environments for the control of fixed-wing aircraft using the JSBSim flight dynamics model. JSBGym requires at least Python 3.7.
 
@@ -85,7 +89,7 @@ f'JSBSim-{task}-{aircraft}-SHAPING_STANDARD-NoFG-v0'
 For example, to fly a Cessna on the TurnHeadingControl task,
 
 ```python
-env = gym.make('JSBSim-TurnHeadingControlTask-Cessna172P-Shaping.STANDARD-NoFG-v0', render_mode="human")
+env = gym.make('JSBSim-TurnHeadingControlTask-Cessna172P-Shaping.STANDARD-NoFG-v0')
 ```
 
 ## Visualisation
@@ -93,6 +97,12 @@ env = gym.make('JSBSim-TurnHeadingControlTask-Cessna172P-Shaping.STANDARD-NoFG-v
 ### 2D
 
 A basic plot of agent actions and current state information can be using `human` render mode by calling `env.render()`.
+
+```python
+env = gym.make('JSBSim-TurnHeadingControlTask-Cessna172P-Shaping.STANDARD-NoFG-v0', render_mode="human")
+env.reset()
+env.render()
+```
 
 ### 3D
 
@@ -105,7 +115,9 @@ fgfs --version
 Visualising with FlightGear requires the Gym to be created with a FlightGear-enabled environment ID by changing 'NoFG' -> 'FG'. For example,
 
 ```python
-env = gym.make('JSBSim-TurnHeadingControlTask-Cessna172P-Shaping.STANDARD-NoFG-v0', render_mode="flightgear")
+env = gym.make('JSBSim-TurnHeadingControlTask-Cessna172P-Shaping.STANDARD-FG-v0', render_mode="flightgear")
+env.reset()
+env.render()
 ```
 
 Then, the first call to `env.render()` will launch FlightGear and begin visualisation.
