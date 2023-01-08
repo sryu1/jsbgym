@@ -1,12 +1,11 @@
 # JSBGym
-
+[![](https://img.shields.io/badge/python-3.7+-blue.svg)](https://www.python.org/downloads/)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+
 
 ## Current Progress
 
 **Some features will not work properly yet, as gym in being converted to gymnasium**
-
-Render mode "human" works, "flightgear" is not working
 
 JSBGym provides reinforcement learning environments for the control of fixed-wing aircraft using the JSBSim flight dynamics model. JSBGym requires at least Python 3.7.
 
