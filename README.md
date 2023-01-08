@@ -35,7 +35,7 @@ And confirm that its Python library is correctly installed from a Python interpr
 import jsbsim
 ```
 
-After that, go to the folder where JSBSim was installed and copy the entire folder, and paste it into your project folder.
+Make sure that JSBSim is installed into C:\JSBSim (That is the default location for JSBSim when installed)
 
 Also install gymnasium and jsbgym
 
@@ -52,7 +52,7 @@ import jsbgym
 
 env = gym.make(ENV_ID)
 env.reset()
-state, reward, terminated, info = env.step(action)
+observation, reward, terminated, truncated, info = env.step(action)
 ```
 
 JSBGym optionally provides 3D visualisation of controlled aircraft using the FlightGear simulator.
