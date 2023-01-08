@@ -109,7 +109,17 @@ env.render()
 3D visualisation requires installation of the FlightGear simulator. Confirm it is runnable from terminal with:
 
 ```console
-fgfs --version
+$ fgfs --version
+FlightGear version: 2020.3.17
+Revision: 54e774dc0f3d280266ed17f2593872d7bab79e2a
+Build-Id: 340
+Build-Type: Release
+FG_ROOT=C:/Program Files/FlightGear 2020.3/data
+FG_HOME=C:/Users/Noah Ryu/AppData/Roaming/flightgear.org
+FG_SCENERY=C:/Users/Noah Ryu/FlightGear/Downloads/TerraSync;C:/Program Files/FlightGear 2020.3/data/Scenery
+SimGear version: 2020.3.17
+OSG version: 3.4.2
+PLIB version: 185
 ```
 
 Visualising with FlightGear requires the Gym to be created with a FlightGear-enabled environment ID by changing 'NoFG' -> 'FG'. For example,
