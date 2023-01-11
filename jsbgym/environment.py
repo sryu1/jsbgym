@@ -160,7 +160,7 @@ class JsbSimEnv(gym.Env):
                 self.flightgear_visualiser = FlightGearVisualiser(
                     self.sim, self.task.get_props_to_output(), flightgear_blocking
                 )
-            self.flightgear_visualiser.plot(self.sim)
+            # self.flightgear_visualiser.plot(self.sim)
         else:
             super().render()
 
