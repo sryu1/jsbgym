@@ -13,7 +13,7 @@ class Simulation(object):
     """
 
     encoding = "utf-8"  # encoding of bytes returned by JSBSim Cython funcs
-    ROOT_DIR = os.environ.get("JSBSIM_ROOT_DIR")
+    ROOT_DIR = os.path.abspath("C:\JSBSim")
     OUTPUT_FILE = "flightgear.xml"
     LONGITUDINAL = "longitudinal"
     FULL = "full"
@@ -145,7 +145,8 @@ class Simulation(object):
         else:
             ic_file = "basic_ic.xml"
 
-        ic_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), ic_file)
+        ic_path = os.path.join(os.path.dirname(
+            os.path.abspath(__file__)), ic_file)
         self.jsbsim.load_ic(ic_path, useStoredPath=False)
         self.load_model(model_name)
         self.jsbsim.set_dt(dt)
