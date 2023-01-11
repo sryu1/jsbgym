@@ -361,6 +361,7 @@ class FlightGearVisualiser(object):
     def _block_until_flightgear_loaded(self):
         while True:
             msg_out = self.flightgear_process.stdout.readline().decode()
+            print(msg_out)
             if self.LOADED_MESSAGE in msg_out:
                 gym.logger.info("FlightGear loading complete; entering world")
                 break
