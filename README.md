@@ -1,7 +1,7 @@
 # JSBGym
+
 [![](https://img.shields.io/badge/python-3.7+-blue.svg)](https://www.python.org/downloads/)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-
 
 ## Current Progress
 
@@ -104,6 +104,7 @@ env.render()
 ```
 
 ### 3D
+
 Make sure the FlightGear bin directory is in PATH (Usually C:\Program Files\FlighGear 2020.3\bin)and there is a system variable called `FG_ROOT` with the FG data folder as it's value (Usually C:\Program Files\FlightGear 2020.3\data).
 3D visualisation requires installation of the FlightGear simulator. Confirm it is runnable from terminal with:
 

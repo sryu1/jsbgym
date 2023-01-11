@@ -87,12 +87,12 @@ class TestJsbSimEnv(unittest.TestCase):
             self.assertAlmostEqual(
                 lo,
                 prop.min,
-                msg=f"{prop} min of {prop.min} does not" f"match space low of {lo}",
+                msg=f"{prop} min of {prop.min} does not" + f"match space low of {lo}",
             )
             self.assertAlmostEqual(
                 hi,
                 prop.max,
-                msg=f"{prop} max of {prop.max} does not" f"match space high of {hi}",
+                msg=f"{prop} max of {prop.max} does not" + f"match space high of {hi}",
             )
 
     def test_reset_env(self):

@@ -117,7 +117,7 @@ class FlightGearRenderTest(unittest.TestCase):
                     print(f"thrust:\t{self.env.sim[prp.engine_thrust_lbs]}")
                     print(f"engine running:\t{self.env.sim[prp.engine_running]}")
                 step_number += 1
-            print(f"***\n" f"EPISODE REWARD: {ep_reward}\n" f"***")
+            print(f"***\n", f"EPISODE REWARD: {ep_reward}\n", f"***")
 
 
 class TurnHeadingControlTest(unittest.TestCase):
@@ -171,4 +171,4 @@ class TurnHeadingControlTest(unittest.TestCase):
                     print(f"target heading:\t{self.env.sim[heading_target]}")
                     print("\n")
                 step_number += 1
-            print(f"***\n" f"EPISODE REWARD: {ep_reward}\n" f"***\n")
+            print(f"***\n", f"EPISODE REWARD: {ep_reward}\n", f"***\n")
