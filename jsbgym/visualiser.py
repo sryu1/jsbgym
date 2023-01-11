@@ -226,7 +226,8 @@ class FigureVisualiser(object):
             text.set_text(f"{sim[prop]:.4g}")
 
     def _plot_control_states(self, sim: Simulation, all_axes: AxesTuple):
-        control_surfaces = [prp.aileron_left, prp.elevator, prp.throttle, prp.rudder]
+        control_surfaces = [prp.aileron_left,
+                            prp.elevator, prp.throttle, prp.rudder]
         ail, ele, thr, rud = [sim[control] for control in control_surfaces]
         # plot aircraft control surface positions
         all_axes.axes_stick.plot(
@@ -298,8 +299,7 @@ class FlightGearVisualiser(object):
         self.flightgear_process = self._launch_flightgear(sim.get_aircraft())
         self.figure = FigureVisualiser(sim, print_props)
         if block_until_loaded:
-            time.sleep(20)
-            # self._block_until_flightgear_loaded()
+            self._block_until_flightgear_loaded()
 
     def plot(self, sim: Simulation) -> None:
         """
@@ -344,7 +344,9 @@ class FlightGearVisualiser(object):
         flight_model_type_arg = "--fdm=" + "external"
         disable_ai_arg = "--disable-ai-traffic"
         disable_live_weather_arg = "--disable-real-weather-fetch"
-        time_of_day_arg = "--timeofday=" + FlightGearVisualiser.TIME
+        time_of_day_arg = "--timeofday=morning"
+        # airport = "--airport=PHTO"
+        # Drastically increases frame rate for slow devices but has a mountain which may interupt learning
         return (
             flightgear_cmd,
             aircraft_arg,
@@ -353,6 +355,7 @@ class FlightGearVisualiser(object):
             disable_ai_arg,
             disable_live_weather_arg,
             time_of_day_arg,
+            # airport
         )
 
     def _block_until_flightgear_loaded(self):
