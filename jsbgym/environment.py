@@ -10,14 +10,14 @@ from typing import Optional, Type, Tuple, Dict
 class JsbSimEnv(gym.Env):
     """
     A class wrapping the JSBSim flight dynamics module (FDM) for simulating
-    aircraft as an RL environment conforming to the OpenAI Gym Env
+    aircraft as an RL environment conforming to the Gymnasium Env
     interface.
 
     An JsbSimEnv is instantiated with a Task that implements a specific
     aircraft control task with its own specific observation/action space and
     variables and agent_reward calculation.
 
-    ATTRIBUTION: this class implements the OpenAI Gym Env API. Method
+    ATTRIBUTION: this class implements the Gymnasium Env API. Method
     docstrings have been adapted or copied from the OpenAI Gym source code.
     """
 
@@ -111,7 +111,7 @@ class JsbSimEnv(gym.Env):
         info = {}
         if self.render_mode == "human":
             self.render()
-        return observation #, info
+        return observation, info
 
     def _init_new_sim(self, dt, aircraft, initial_conditions):
         return Simulation(
