@@ -3,68 +3,38 @@
 [![](https://img.shields.io/badge/python-3.7+-blue.svg)](https://www.python.org/downloads/)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-## Current Progress
+> ⚠️ **NOTE**: Some features will not work yet, as the original library this used was gym, but it is being converted to gymnasium. Also note that this will only work for Windows for now.
 
-**Some features will not work properly yet, as gym in being converted to gymnasium**
-
-JSBGym provides reinforcement learning environments for the control of fixed-wing aircraft using the JSBSim flight dynamics model. JSBGym requires at least Python 3.7.
-
-The package's environments implement the Farama-Foundation's Gymnasium interface allowing environments to be created and interacted with in the usual way.
+JSBGym provides reinforcement learning environments for the control of fixed-wing aircraft using the JSBSim flight dynamics model. JSBGym requires at least Python 3.7. The package's environments implement the Farama-Foundation's Gymnasium interface allowing environments to be created and interacted with in the usual way.
 
 ## Setup
 
-Firstly, follow the instructions on the [JSBSim](https://github.com/JSBSim-Team/jsbsim) repository to install JSBSim and its libraries.
+Firstly, install [JSBSim](https://github.com/JSBSim-Team/jsbsim). Make sure that it is installed in `C:/JSBSim`
 
-Confirm that JSBSim is installed from the terminal:
-
-Linux
-
-```console
-$ JSBSim --version
-JSBSim Version: 1.0.0 Jul 16 2018 09:14:35
-```
-
-Windows
+If you would like to render the environment with FlightGear, install it from [here](https://sourceforge.net/projects/flightgear/). Make sure the FlightGear bin directory is in PATH (Usually `C:\Program Files\FlighGear 2020.3\bin`)and there is a system variable called `FG_ROOT` with the FG data folder as it's value (Usually `C:\Program Files\FlightGear 2020.3\data`).
+3D visualisation requires installation of the FlightGear simulator. Confirm it is runnable from terminal with:
 
 ```console
-$ cd <JSBSim Directory>
-$ ./JSBSim --version
-JSBSim Version: 1.1.13 [GitHub build 986/commit a09715f01b9e568ce75ca2635ba0a78ce57f7cdd] Dec  3 2022 12:21:06
+fgfs --version
 ```
 
-And confirm that its Python library is correctly installed from a Python interpreter or IDE:
-
-```python
-import jsbsim
-```
-
-Make sure that JSBSim is installed into C:\JSBSim (That is the default location for JSBSim when installed)
-
-Also install gymnasium and jsbgym
+Open the console and install the required dependencies for python:
 
 ```console
-pip install gymnasium, git+https://github.com/sryu1/jsbgym
+pip install gymnasium git+https://github.com/sryu1/jsbgym jsbsim
 ```
 
 ## Getting Started
 
 ```python
-import gymnasium as gym
 import jsbsim
 import jsbgym
+import gymnasium as gym
 
 env = gym.make(ENV_ID)
 env.reset()
 observation, reward, terminated, truncated, info = env.step(action)
 ```
-
-JSBGym optionally provides 3D visualisation of controlled aircraft using the FlightGear simulator.
-
-## Dependencies
-
-* [JSBSim](https://github.com/JSBSim-Team/jsbsim) flight dynamics model, including the C++ and Python libraries
-* FlightGear simulator (optional for visualisation)
-* gymnasium, numpy, matplotlib
 
 ## Environments
 
@@ -105,32 +75,13 @@ env.render()
 
 ### 3D
 
-Make sure the FlightGear bin directory is in PATH (Usually C:\Program Files\FlighGear 2020.3\bin)and there is a system variable called `FG_ROOT` with the FG data folder as it's value (Usually C:\Program Files\FlightGear 2020.3\data).
-3D visualisation requires installation of the FlightGear simulator. Confirm it is runnable from terminal with:
-
-```console
-$ fgfs --version
-FlightGear version: 2020.3.17
-Revision: 54e774dc0f3d280266ed17f2593872d7bab79e2a
-Build-Id: 340
-Build-Type: Release
-FG_ROOT=C:/Program Files/FlightGear 2020.3/data
-FG_HOME=C:/Users/Noah Ryu/AppData/Roaming/flightgear.org
-FG_SCENERY=C:/Users/Noah Ryu/FlightGear/Downloads/TerraSync;C:/Program Files/FlightGear 2020.3/data/Scenery
-SimGear version: 2020.3.17
-OSG version: 3.4.2
-PLIB version: 185
-```
-
-Visualising with FlightGear requires the Gym to be created with a FlightGear-enabled environment ID by changing 'NoFG' -> 'FG'. For example,
+Visualising with FlightGear requires the Gymnasium environment to be created with a FlightGear-enabled environment ID by changing 'NoFG' -> 'FG'. For example:
 
 ```python
 env = gym.make('JSBSim-TurnHeadingControlTask-Cessna172P-Shaping.STANDARD-FG-v0', render_mode="flightgear")
 env.reset()
 env.render()
 ```
-
-Then, the first call to `env.render()` will launch FlightGear and begin visualisation.
 
 ## State and Action Space
 
