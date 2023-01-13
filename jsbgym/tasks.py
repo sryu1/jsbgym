@@ -141,7 +141,8 @@ class FlightTask(Task, ABC):
     def _make_state_class(self) -> None:
         """Creates a namedtuple for readable State data"""
         # get list of state property names, containing legal chars only
-        legal_attribute_names = [prop.get_legal_name() for prop in self.state_variables]
+        legal_attribute_names = [prop.get_legal_name()
+                                 for prop in self.state_variables]
         self.State = namedtuple("State", legal_attribute_names)
 
     def task_step(
@@ -232,14 +233,18 @@ class FlightTask(Task, ABC):
         ...
 
     def get_state_space(self) -> gym.Space:
-        state_lows = np.array([state_var.min for state_var in self.state_variables])
-        state_highs = np.array([state_var.max for state_var in self.state_variables])
-        return gym.spaces.Box(low=state_lows, high=state_highs, dtype=np.float64)
+        state_lows = np.array(
+            [state_var.min for state_var in self.state_variables], dtype=np.float64)
+        state_highs = np.array(
+            [state_var.max for state_var in self.state_variables], dtype=np.float64)
+        return gym.spaces.Box(low=state_lows, high=state_highs)
 
     def get_action_space(self) -> gym.Space:
-        action_lows = np.array([act_var.min for act_var in self.action_variables])
-        action_highs = np.array([act_var.max for act_var in self.action_variables])
-        return gym.spaces.Box(low=action_lows, high=action_highs, dtype=np.float64)
+        action_lows = np.array(
+            [act_var.min for act_var in self.action_variables], dtype=np.float64)
+        action_highs = np.array(
+            [act_var.max for act_var in self.action_variables], dtype=np.float64)
+        return gym.spaces.Box(low=action_lows, high=action_highs)
 
 
 class Shaping(enum.Enum):
@@ -488,7 +493,8 @@ class TurnHeadingControlTask(HeadingControlTask):
 
     def get_initial_conditions(self) -> [Dict[Property, float]]:
         initial_conditions = super().get_initial_conditions()
-        random_heading = random.uniform(prp.heading_deg.min, prp.heading_deg.max)
+        random_heading = random.uniform(
+            prp.heading_deg.min, prp.heading_deg.max)
         initial_conditions[prp.initial_heading_deg] = random_heading
         return initial_conditions
 

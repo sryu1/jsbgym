@@ -226,8 +226,7 @@ class FigureVisualiser(object):
             text.set_text(f"{sim[prop]:.4g}")
 
     def _plot_control_states(self, sim: Simulation, all_axes: AxesTuple):
-        control_surfaces = [prp.aileron_left,
-                            prp.elevator, prp.throttle, prp.rudder]
+        control_surfaces = [prp.aileron_left, prp.elevator, prp.throttle, prp.rudder]
         ail, ele, thr, rud = [sim[control] for control in control_surfaces]
         # plot aircraft control surface positions
         all_axes.axes_stick.plot(
