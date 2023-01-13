@@ -1,7 +1,7 @@
 import jsbsim
 import os
 import time
-from mpl_toolkits.mplot3d import Axes3D  # req'd for 3d plotting
+from mpl_toolkits.mplot3d import Axes3D  # required for 3d plotting
 from typing import Dict, Union
 import jsbgym.properties as prp
 from jsbgym.aircraft import Aircraft, cessna172P
