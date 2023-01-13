@@ -122,10 +122,10 @@ class FlightTask(Task, ABC):
     )
     last_agent_reward = Property(
         "reward/last_agent_reward",
-        "agent reward from step; includes", "potential-based shaping reward"
+        "agent reward from step; includes" "potential-based shaping reward",
     )
     last_assessment_reward = Property(
-        "reward/last_assess_reward", "assessment reward from step;", "excludes shaping"
+        "reward/last_assess_reward", "assessment reward from step;" "excludes shaping"
     )
     state_variables: Tuple[BoundedProperty, ...]
     action_variables: Tuple[BoundedProperty, ...]
@@ -237,14 +237,14 @@ class FlightTask(Task, ABC):
             [state_var.min for state_var in self.state_variables])
         state_highs = np.array(
             [state_var.max for state_var in self.state_variables])
-        return gym.spaces.Box(low=state_lows, high=state_highs, dtype=np.float32)
+        return gym.spaces.Box(low=state_lows, high=state_highs, dtype=np.float64)
 
     def get_action_space(self) -> gym.Space:
         action_lows = np.array(
             [act_var.min for act_var in self.action_variables])
         action_highs = np.array(
             [act_var.max for act_var in self.action_variables])
-        return gym.spaces.Box(low=action_lows, high=action_highs, dtype=np.float32)
+        return gym.spaces.Box(low=action_lows, high=action_highs, dtype=np.float64)
 
 
 class Shaping(enum.Enum):
