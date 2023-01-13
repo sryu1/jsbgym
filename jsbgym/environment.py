@@ -111,7 +111,7 @@ class JsbSimEnv(gym.Env):
         info = {}
         if self.render_mode == "human":
             self.render()
-        return observation, info
+        return observation #, info
 
     def _init_new_sim(self, dt, aircraft, initial_conditions):
         return Simulation(
