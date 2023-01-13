@@ -1,6 +1,6 @@
 # JSBGym
 
-[![](https://img.shields.io/badge/python-3.7+-blue.svg)](https://www.python.org/downloads/)
+[![Python: 3.7+](https://img.shields.io/badge/python-3.7+-blue.svg)](https://www.python.org/downloads/)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 > ⚠️ **NOTE**: Some features will not work yet, as the original library this used was gym, but it is being converted to gymnasium. Also note that this will only work for Windows for now.
