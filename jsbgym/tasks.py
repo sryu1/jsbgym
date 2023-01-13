@@ -122,7 +122,7 @@ class FlightTask(Task, ABC):
     )
     last_agent_reward = Property(
         "reward/last_agent_reward",
-        "agent reward from step; includes", "potential-based shaping reward",
+        "agent reward from step; includes", "potential-based shaping reward"
     )
     last_assessment_reward = Property(
         "reward/last_assess_reward", "assessment reward from step;", "excludes shaping"
