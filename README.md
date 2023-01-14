@@ -65,7 +65,8 @@ env = gym.make('JSBSim-TurnHeadingControlTask-Cessna172P-Shaping.STANDARD-NoFG-v
 
 ### 2D
 
-A basic plot of agent actions and current state information can be using `human` render mode by calling `env.render()`.
+A basic plot of agent actions and current state information can be using `human` render mode by calling `env.render()` after specifying the render mode in `gym.make()`
+.
 
 ```python
 env = gym.make('JSBSim-TurnHeadingControlTask-Cessna172P-Shaping.STANDARD-NoFG-v0', render_mode="human")
@@ -75,7 +76,7 @@ env.render()
 
 ### 3D
 
-Visualising with FlightGear requires the Gymnasium environment to be created with a FlightGear-enabled environment ID by changing 'NoFG' -> 'FG'. For example:
+Visualising with FlightGear requires the Gymnasium environment to be created with a FlightGear-enabled environment ID by changing 'NoFG' -> 'FG' and specifying the render_mode in `gym.make()`. For example:
 
 ```python
 env = gym.make('JSBSim-TurnHeadingControlTask-Cessna172P-Shaping.STANDARD-FG-v0', render_mode="flightgear")
