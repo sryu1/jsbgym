@@ -125,7 +125,7 @@ class FlightTask(Task, ABC):
         "agent reward from step; includes potential-based shaping reward",
     )
     last_assessment_reward = Property(
-        "reward/last_assess_reward assessment reward from step; excludes shaping"
+        "reward/last_assess_reward", "assessment reward from step; excludes shaping"
     )
     state_variables: Tuple[BoundedProperty, ...]
     action_variables: Tuple[BoundedProperty, ...]
