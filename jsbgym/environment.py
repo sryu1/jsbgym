@@ -22,7 +22,7 @@ class JsbSimEnv(gym.Env):
     """
 
     JSBSIM_DT_HZ: int = 60  # JSBSim integration frequency
-    metadata = {"render_modes": ["human", "flightgear"], "render_fps": 30}
+    metadata = {"render_modes": ["human", "flightgear"], "render_fps": 60}
 
     def __init__(
         self,
@@ -188,7 +188,7 @@ class NoFGJsbSimEnv(JsbSimEnv):
     failure of the network.
     """
 
-    metadata = {"render_modes": ["human"], "render_fps": 30}
+    metadata = {"render_modes": ["human"], "render_fps": 60}
 
     def _init_new_sim(self, dt: float, aircraft: Aircraft, initial_conditions: Dict):
         return Simulation(

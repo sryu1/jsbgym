@@ -280,7 +280,7 @@ def normalise_error_asymptotic(absolute_error: float, scaling_factor: float) -> 
     """
     if absolute_error < 0:
         raise ValueError(
-            f"Error to be normalised must be non-negative ", f": {absolute_error}"
+            f"Error to be normalised must be non-negative : {absolute_error}"
         )
     scaled_error = absolute_error / scaling_factor
     return scaled_error / (scaled_error + 1)
@@ -294,7 +294,7 @@ def normalise_error_linear(absolute_error: float, max_error: float) -> float:
     """
     if absolute_error < 0:
         raise ValueError(
-            f"Error to be normalised must be non-negative ", f": {absolute_error}"
+            f"Error to be normalised must be non-negative : {absolute_error}"
         )
     elif absolute_error > max_error:
         return 1.0
