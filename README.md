@@ -21,7 +21,7 @@ fgfs --version
 Open the console and install the required dependencies for python:
 
 ```console
-pip install gymnasium git+https://github.com/sryu1/jsbgym jsbsim
+pip install git+https://github.com/sryu1/jsbgym
 ```
 
 ## Getting Started
