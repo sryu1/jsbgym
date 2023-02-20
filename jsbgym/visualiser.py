@@ -344,8 +344,6 @@ class FlightGearVisualiser(object):
         disable_ai_arg = "--disable-ai-traffic"
         disable_live_weather_arg = "--disable-real-weather-fetch"
         time_of_day_arg = "--timeofday=" + FlightGearVisualiser.TIME
-        # airport = "--airport=PHTO"
-        # Increases frame rate for slow devices but has a mountain which may interupt learning
         return (
             flightgear_cmd,
             aircraft_arg,
@@ -354,15 +352,12 @@ class FlightGearVisualiser(object):
             disable_ai_arg,
             disable_live_weather_arg,
             time_of_day_arg,
-            # airport
         )
 
     def _block_until_flightgear_loaded(self):
         while True:
             msg_out = self.flightgear_process.stdout.readline().decode()
-            # print(msg_out)
             if self.LOADED_MESSAGE in msg_out:
-                # gym.logger.info("FlightGear loading complete; entering world")
                 print("FlightGear loading complete")
                 break
             else:

@@ -22,7 +22,7 @@ class JsbSimEnv(gym.Env):
     """
 
     JSBSIM_DT_HZ: int = 60  # JSBSim integration frequency
-    metadata = {"render_modes": ["human", "flightgear"], "render_fps": 60}
+    metadata = {"render_modes": ["human", "flightgear", "rgb_array"], "render_fps": 60}
 
     def __init__(
         self,
@@ -124,7 +124,7 @@ class JsbSimEnv(gym.Env):
             gym.logger.warn(
                 "You are calling render method without specifying any render mode. "
                 "You can specify the render_mode at initialization, "
-                f'e.g. gym.make("{self.spec.id}", render_mode="rgb_array")'
+                f'e.g. gym.make("{self.spec.id}", render_mode="human")'
             )
             return
 
@@ -188,7 +188,7 @@ class NoFGJsbSimEnv(JsbSimEnv):
     failure of the network.
     """
 
-    metadata = {"render_modes": ["human"], "render_fps": 60}
+    metadata = {"render_modes": ["human", "rgb_array"], "render_fps": 60}
 
     def _init_new_sim(self, dt: float, aircraft: Aircraft, initial_conditions: Dict):
         return Simulation(
