@@ -21,7 +21,8 @@ class Aircraft(
 
 
 cessna172P = Aircraft("c172p", "c172p", "Cessna172P", 120)
-# observed speed at engine settings used alt = 5k ft
+pa28 = Aircraft("pa28", "PA28-161-180", "PA28", 130)
 f15 = Aircraft("f15", "f15c", "F15", 500)
+f16 = Aircraft("f16", "f16-block-52", "F16", 550)
 a320 = Aircraft("A320", "A320-200-CFM", "A320", 480)
-# f16 = Aircraft("f16", "f16-block-52", "F16", 550) Might be added later
+b787 = Aircraft("787-8","787-8","B787", 480)
