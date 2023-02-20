@@ -3,7 +3,7 @@
 [![Python: 3.7+](https://img.shields.io/badge/python-3.7+-blue.svg)](https://www.python.org/downloads/)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-> ⚠️ **NOTE**: Some features will not work yet, as the original library this used was gym, but it is being converted to gymnasium. Also note that this will only work for Windows for now.
+> ⚠️ **NOTE**: Some features will not work yet, as the original library this used was gym, but it is being converted to gymnasium. Also note that this will only work for Windows for now. This will only work with Windows, since there are some directories that are configured only for Windows. A320 will not work right now due to some startup errors.
 
 JSBGym provides reinforcement learning environments for the control of fixed-wing aircraft using the JSBSim flight dynamics model. JSBGym requires at least Python 3.7. The package's environments implement the Farama-Foundation's Gymnasium interface allowing environments to be created and interacted with in the usual way.
 

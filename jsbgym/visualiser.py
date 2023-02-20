@@ -1,6 +1,7 @@
 import gymnasium as gym
 import subprocess
 import time
+import os
 import matplotlib.pyplot as plt
 import jsbgym.properties as prp
 from jsbgym.aircraft import Aircraft
@@ -280,6 +281,7 @@ class FlightGearVisualiser(object):
     LOADED_MESSAGE = "loading cities done"
     FLIGHTGEAR_TIME_FACTOR = 1  # sim speed relative to realtime, higher is faster
     TIME = "morning"
+    EXTRA_AIRCRAFT_LOCATION = "C:/Users/" + os.getlogin() + "/FlightGear/Downloads\Aircraft\org.flightgear.fgaddon.stable_2020\Aircraft"
 
     def __init__(
         self, sim: Simulation, print_props: Tuple[prp.Property], block_until_loaded=True
@@ -344,6 +346,7 @@ class FlightGearVisualiser(object):
         disable_ai_arg = "--disable-ai-traffic"
         disable_live_weather_arg = "--disable-real-weather-fetch"
         time_of_day_arg = "--timeofday=" + FlightGearVisualiser.TIME
+        extra_aircraft = "--fg-aircraft=" + FlightGearVisualiser.EXTRA_AIRCRAFT_LOCATION
         return (
             flightgear_cmd,
             aircraft_arg,
@@ -352,11 +355,14 @@ class FlightGearVisualiser(object):
             disable_ai_arg,
             disable_live_weather_arg,
             time_of_day_arg,
+            extra_aircraft
         )
+        
 
     def _block_until_flightgear_loaded(self):
         while True:
             msg_out = self.flightgear_process.stdout.readline().decode()
+            print(msg_out)
             if self.LOADED_MESSAGE in msg_out:
                 print("FlightGear loading complete")
                 break
