@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "jsbgym"
-version = "0.1.2"
+version = "0.1.3"
 authors = [{ name = "sryu1" }]
 license = { text = "MIT" }
 description = "A package of reinforcement learning environments for flight control using the JSBSim flight dynamics model."
