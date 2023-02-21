@@ -124,7 +124,7 @@ class AbstractTestErrorComponent(unittest.TestCase, ABC):
             state_vars,
             state_vars[target_index],
             scaling_factor,
-            **self.extra_kwargs
+            **self.extra_kwargs,
         )
 
     def get_component_target_constant(
@@ -143,7 +143,7 @@ class AbstractTestErrorComponent(unittest.TestCase, ABC):
             target_value,
             shaping,
             scaling_factor,
-            **self.extra_kwargs
+            **self.extra_kwargs,
         )
 
 

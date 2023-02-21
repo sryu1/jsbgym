@@ -3,7 +3,7 @@
 [![Python: 3.7+](https://img.shields.io/badge/python-3.7+-blue.svg)](https://www.python.org/downloads/)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-> ⚠️ **NOTE**: Some features will not work yet, as the original library this used was gym, but it is being converted to gymnasium. Also note that this will only work for Windows for now. This will only work with Windows, since there are some directories that are configured only for Windows. A320 will not work right now due to some startup errors.
+> ⚠️ **NOTE**: Some features will not work yet, as the original library this used was gym, but it is being converted to gymnasium. Also note that THIS WILL ONLY WORK WITH WINDOWS for now. This will only work with Windows, since there are some directories that are configured only for Windows. A320 will not work right now due to some startup errors.
 
 JSBGym provides reinforcement learning environments for the control of fixed-wing aircraft using the JSBSim flight dynamics model. JSBGym requires at least Python 3.7. The package's environments implement the Farama-Foundation's Gymnasium interface allowing environments to be created and interacted with in the usual way.
 
@@ -27,7 +27,6 @@ pip install git+https://github.com/sryu1/jsbgym
 ## Getting Started
 
 ```python
-import jsbsim
 import jsbgym
 import gymnasium as gym
 
@@ -38,27 +37,36 @@ observation, reward, terminated, truncated, info = env.step(action)
 
 ## Environments
 
+### Task
+
 JSBGym implements two tasks for controlling the altitude and heading of aircraft:
 
 * **HeadingControlTask**: aircraft must fly in a straight line, maintaining its initial altitude and direction of travel (heading)
 * **TurnHeadingControlTask**: aircraft must turn to face a random target heading while maintaining their initial altitude
 
+### Aircraft
+
 The environment can be configured to use one of three aircraft:
 
-* **Cessna172P** light aircraft
-* **F15** fighter jet
-* **A320** airliner
+* **Cessna172P** Light Aircraft
+* **PA28** Light Aircraft
+* **F15** Fighter Jet
+* **F-16** Fighter Jet
+* **A320** Airliner
+* **B787** Airliner
+
+All aircraft except the Cessna 172P requires the aircraft to be downloaded via the launcher using the default FlightGear Hangar.
 
 Environment ID strings are constructed as follows:
 
 ```python
-f"JSBSim-{task}-{aircraft}-SHAPING_STANDARD"
+f"JSBSim-{task}-{aircraft}-Shaping.STANDARD"
 ```
 
-For example, to fly a Cessna on the TurnHeadingControl task,
+For example, to fly a Cessna on the Heading Control task,
 
 ```python
-env = gym.make('JSBSim-TurnHeadingControlTask-Cessna172P-Shaping.STANDARD')
+env = gym.make('JSBSim-HeadingControlTask-Cessna172P-Shaping.STANDARD')
 ```
 
 ## Visualisation
@@ -68,7 +76,7 @@ env = gym.make('JSBSim-TurnHeadingControlTask-Cessna172P-Shaping.STANDARD')
 A basic plot of agent actions and current state information can be using `human` render mode by calling `env.render()` after specifying the render mode in `gym.make()`.
 
 ```python
-env = gym.make("JSBSim-TurnHeadingControlTask-Cessna172P-Shaping.STANDARD", render_mode="human")
+env = gym.make("JSBSim-HeadingControlTask-Cessna172P-Shaping.STANDARD", render_mode="human")
 env.reset()
 env.render()
 ```
@@ -78,7 +86,7 @@ env.render()
 Visualising with FlightGear requires the Gymnasium environment to be created with a FlightGear-enabled environment ID by specifying the render_mode in `gym.make()`. For example:
 
 ```python
-env = gym.make("JSBSim-TurnHeadingControlTask-Cessna172P-Shaping.STANDARD", render_mode="flightgear")
+env = gym.make("JSBSim-HeadingControlTask-Cessna172P-Shaping.STANDARD", render_mode="flightgear")
 env.reset()
 env.render()
 ```
@@ -114,3 +122,9 @@ JSBGym's environments have a continuous state and action space. The state is a 1
  (name='fcs/elevator-cmd-norm', description='elevator commanded position, normalised', min=-1.0, max=1.0)
  (name='fcs/rudder-cmd-norm', description='rudder commanded position, normalised', min=-1.0, max=1.0)
  ```
+
+ Throttle will be 0.8 by default.
+
+## Known Issues
+
+* Some aircraft when rendering with FlightGear will not start on the ground, but in the ground (A320 does not work completely with render)

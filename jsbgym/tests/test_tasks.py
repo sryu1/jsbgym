@@ -297,7 +297,6 @@ class TestHeadingControlTask(unittest.TestCase):
 
     def test_task_step_correct_terminal_reward_optimal_behaviour_no_shaping(self):
         for positive_reward in (True, False):
-
             self.setUp()
             task = self.make_task(
                 shaping_type=Shaping.STANDARD,
