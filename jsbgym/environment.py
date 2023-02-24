@@ -22,7 +22,7 @@ class JsbSimEnv(gym.Env):
     """
 
     JSBSIM_DT_HZ: int = 60  # JSBSim integration frequency
-    metadata = {"render_modes": ["human", "flightgear", "rgb_array"], "render_fps": 60}
+    metadata = {"render_modes": ["human", "flightgear", "human_fg", "rgb_array"], "render_fps": 60}
 
     def __init__(
         self,
@@ -160,7 +160,12 @@ class JsbSimEnv(gym.Env):
                 self.flightgear_visualiser = FlightGearVisualiser(
                     self.sim, self.task.get_props_to_output(), flightgear_blocking
                 )
-            # self.flightgear_visualiser.plot(self.sim)
+        elif self.render_mode == "human_fg":
+            if not self.flightgear_visualiser:
+                self.flightgear_visualiser = FlightGearVisualiser(
+                    self.sim, self.task.get_props_to_output(), flightgear_blocking
+                )
+            self.flightgear_visualiser.plot(self.sim)
         else:
             super().render()
 
@@ -176,30 +181,3 @@ class JsbSimEnv(gym.Env):
             self.figure_visualiser.close()
         if self.flightgear_visualiser:
             self.flightgear_visualiser.close()
-
-
-class NoFGJsbSimEnv(JsbSimEnv):
-    """
-    An RL environment for JSBSim with rendering to FlightGear disabled.
-
-    This class exists to be used for training agents where visualisation is not
-    required. Otherwise, restrictions in JSBSim output initialisation cause it
-    to open a new socket for every single episode, eventually leading to
-    failure of the network.
-    """
-
-    metadata = {"render_modes": ["human", "rgb_array"], "render_fps": 60}
-
-    def _init_new_sim(self, dt: float, aircraft: Aircraft, initial_conditions: Dict):
-        return Simulation(
-            sim_frequency_hz=dt,
-            aircraft=aircraft,
-            init_conditions=initial_conditions,
-            allow_flightgear_output=False,
-        )
-
-    def render(self, flightgear_blocking=True):
-        if self.render_mode == "flightgear":
-            raise ValueError("flightgear rendering is disabled for this class")
-        else:
-            super().render(flightgear_blocking)
