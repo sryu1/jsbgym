@@ -18,11 +18,14 @@ class JsbSimEnv(gym.Env):
     variables and agent_reward calculation.
 
     ATTRIBUTION: this class implements the Gymnasium Env API. Method
-    docstrings have been adapted or copied from the OpenAI Gym source code.
+    docstrings have been adapted or copied from the OpenAI Gym source code then converted to work with the gymnasium interface.
     """
 
     JSBSIM_DT_HZ: int = 60  # JSBSim integration frequency
-    metadata = {"render_modes": ["human", "flightgear", "human_fg", "rgb_array"], "render_fps": 60}
+    metadata = {
+        "render_modes": ["human", "flightgear", "human_fg", "rgb_array"],
+        "render_fps": 60,
+    }
 
     def __init__(
         self,
