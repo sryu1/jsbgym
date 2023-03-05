@@ -21,7 +21,7 @@ class AttributeFormatter(object):
         return string.translate(AttributeFormatter.TRANSLATION_TABLE)
 
 
-def get_env_id(task_type, aircraft, shaping) -> str:
+def get_env_id(task_type, aircraft, shaping, enable_flightgear) -> str:
     """
     Creates an env ID from the environment's components
 
@@ -30,7 +30,11 @@ def get_env_id(task_type, aircraft, shaping) -> str:
     :param shaping: HeadingControlTask.Shaping enum, the reward shaping setting
     :param enable_flightgear: True if FlightGear simulator is enabled for visualisation else False
     """
-    return f"JSBSim-{task_type.__name__}-{aircraft.name}-{shaping}"
+    if enable_flightgear:
+        fg_setting = "FG"
+    else:
+        fg_setting = "NoFG"
+    return f"JSBSim-{task_type.__name__}-{aircraft.name}-{shaping}-{fg_setting}-v0"
 
 
 def get_env_id_kwargs_map() -> Dict[str, Tuple]:
@@ -42,9 +46,10 @@ def get_env_id_kwargs_map() -> Dict[str, Tuple]:
     for task_type in (HeadingControlTask, TurnHeadingControlTask):
         for plane in (cessna172P, a320, f15, pa28, b787, f16):
             for shaping in (Shaping.STANDARD, Shaping.EXTRA, Shaping.EXTRA_SEQUENTIAL):
-                id = get_env_id(task_type, plane, shaping)
-                assert id not in map
-                map[id] = (task_type, plane, shaping)
+                 for enable_flightgear in (True, False):
+                    id = get_env_id(task_type, plane, shaping, enable_flightgear)
+                    assert id not in map
+                    map[id] = (task_type, plane, shaping, enable_flightgear)
     return map
 
 
