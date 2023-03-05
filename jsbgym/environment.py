@@ -5,7 +5,8 @@ from jsbgym.simulation import Simulation
 from jsbgym.visualiser import FigureVisualiser, FlightGearVisualiser
 from jsbgym.aircraft import Aircraft, cessna172P
 from typing import Optional, Type, Tuple, Dict
-
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 
 class JsbSimEnv(gym.Env):
     """
@@ -23,7 +24,7 @@ class JsbSimEnv(gym.Env):
 
     JSBSIM_DT_HZ: int = 60  # JSBSim integration frequency
     metadata = {
-        "render_modes": ["human", "flightgear", "human_fg", "rgb_array"],
+        "render_modes": ["human", "flightgear", "human_fg"],
         "render_fps": 60,
     }
 
@@ -89,6 +90,7 @@ class JsbSimEnv(gym.Env):
             self.sim, action, self.sim_steps_per_agent_step
         )
         observation = np.array(state)
+        self.observation = observation
         return observation, reward, terminated, False, info
 
     def reset(self, seed: Optional[int] = None, options: Optional[dict] = None):
@@ -111,6 +113,7 @@ class JsbSimEnv(gym.Env):
         if self.flightgear_visualiser:
             self.flightgear_visualiser.configure_simulation_output(self.sim)
         observation = np.array(state)
+        self.observation = observation
         info = {}
         if self.render_mode == "human":
             self.render()
@@ -137,9 +140,6 @@ class JsbSimEnv(gym.Env):
         if mode is:
         - human: render to the current display or terminal and
           return nothing. Usually for human consumption.
-        - rgb_array: Return an numpy.ndarray with shape (x, y, 3),
-          representing RGB values for an x-by-y pixel image, suitable
-          for turning into a video.
         - ansi: Return a string (str) or StringIO.StringIO containing a
           terminal-style text representation. The text can include newlines
           and ANSI escape sequences (e.g. for colors).
@@ -169,6 +169,8 @@ class JsbSimEnv(gym.Env):
                     self.sim, self.task.get_props_to_output(), flightgear_blocking
                 )
             self.flightgear_visualiser.plot(self.sim)
+        
+        
         else:
             super().render()
 
@@ -184,3 +186,29 @@ class JsbSimEnv(gym.Env):
             self.figure_visualiser.close()
         if self.flightgear_visualiser:
             self.flightgear_visualiser.close()
+
+class NoFGJsbSimEnv(JsbSimEnv):
+    """
+    An RL environment for JSBSim with rendering to FlightGear disabled.
+
+    This class exists to be used for training agents where visualisation is not
+    required. Otherwise, restrictions in JSBSim output initialisation cause it
+    to open a new socket for every single episode, eventually leading to
+    failure of the network.
+    """
+
+    metadata = {"render_modes": ["human", "rgb_array"], "render_fps": 60}
+
+    def _init_new_sim(self, dt: float, aircraft: Aircraft, initial_conditions: Dict):
+        return Simulation(
+            sim_frequency_hz=dt,
+            aircraft=aircraft,
+            init_conditions=initial_conditions,
+            allow_flightgear_output=False,
+        )
+
+    def render(self, flightgear_blocking=True):
+        if self.render_mode == "flightgear":
+            raise ValueError("flightgear rendering is disabled for this class")
+        else:
+            super().render(flightgear_blocking)
