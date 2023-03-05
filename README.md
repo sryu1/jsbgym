@@ -60,13 +60,13 @@ All aircraft except the Cessna 172P requires the aircraft to be downloaded via t
 Environment ID strings are constructed as follows:
 
 ```python
-f"JSBSim-{task}-{aircraft}-Shaping.STANDARD-{FG}-v0"
+f"JSBSim-{task}-{aircraft}-Shaping.STANDARD"
 ```
 
 For example, to fly a Cessna on the Heading Control task,
 
 ```python
-env = gym.make('JSBSim-HeadingControlTask-Cessna172P-Shaping.STANDARD-NoFG-v0')
+env = gym.make('JSBSim-HeadingControlTask-Cessna172P-Shaping.STANDARD')
 ```
 
 ## Visualisation
@@ -76,17 +76,17 @@ env = gym.make('JSBSim-HeadingControlTask-Cessna172P-Shaping.STANDARD-NoFG-v0')
 A basic plot of agent actions and current state information can be using `human` render mode by calling `env.render()` after specifying the render mode in `gym.make()`.
 
 ```python
-env = gym.make("JSBSim-HeadingControlTask-Cessna172P-Shaping.STANDARD-NoFG-v0", render_mode="human")
+env = gym.make("JSBSim-HeadingControlTask-Cessna172P-Shaping.STANDARD", render_mode="human")
 env.reset()
 env.render()
 ```
 
 ### 3D
 
-Visualising with FlightGear requires the Gymnasium environment to be created with a FlightGear-enabled environment ID by changing 'NoFG' -> 'FG' and specifying the render_mode in `gym.make()`. For example:
+Visualising with FlightGear requires the Gymnasium environment to be created with a FlightGear-enabled environment ID by specifying the render_mode in `gym.make()`. For example:
 
 ```python
-env = gym.make("JSBSim-HeadingControlTask-Cessna172P-Shaping.STANDARD-FG-v0", render_mode="flightgear")
+env = gym.make("JSBSim-HeadingControlTask-Cessna172P-Shaping.STANDARD", render_mode="flightgear")
 env.reset()
 env.render()
 ```
