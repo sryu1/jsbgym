@@ -61,7 +61,7 @@ class FigureVisualiser(object):
         for subplot in self.axes[1:]:
             # pop and translate all data points
             while subplot.lines:
-                data = list(subplot.lines).pop()
+                data = subplot.lines.pop()
                 del data
 
         self._print_state(sim)
