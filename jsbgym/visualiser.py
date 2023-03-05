@@ -36,12 +36,10 @@ class FigureVisualiser(object):
     def __init__(self, _: Simulation, print_props: Tuple[prp.Property]):
         """
         Constructor.
-
         Sets here is ft_per_deg_lon, which depends dynamically on aircraft's
         longitude (because of the conversion between geographic and Euclidean
         coordinate systems). We retrieve longitude from the simulation and
         assume it is constant thereafter.
-
         :param _: (unused) Simulation that will be plotted
         :param print_props: Propertys which will have their values printed to Figure.
             Must be retrievable from the plotted Simulation.
@@ -54,7 +52,6 @@ class FigureVisualiser(object):
     def plot(self, sim: Simulation) -> None:
         """
         Creates or updates a 3D plot of the episode.
-
         :param sim: Simulation that will be plotted
         """
         if not self.figure:
@@ -70,8 +67,7 @@ class FigureVisualiser(object):
         self._print_state(sim)
         self._plot_control_states(sim, self.axes)
         self._plot_control_commands(sim, self.axes)
-        # voodoo pause needed for figure to update
-        plt.pause(self.PLOT_PAUSE_SECONDS)
+        plt.pause(self.PLOT_PAUSE_SECONDS)  # voodoo pause needed for figure to update
 
     def close(self):
         if self.figure:
@@ -82,7 +78,6 @@ class FigureVisualiser(object):
     def _plot_configure(self):
         """
         Creates a figure with subplots for states and actions.
-
         :return: (figure, axes) where:
             figure: a matplotlib Figure with subplots for state and controls
             axes: an AxesTuple object with references to all figure subplot axes
@@ -186,8 +181,7 @@ class FigureVisualiser(object):
         )
 
         plt.show()
-        # voodoo pause needed for figure to appear
-        plt.pause(self.PLOT_PAUSE_SECONDS)
+        plt.pause(self.PLOT_PAUSE_SECONDS)  # voodoo pause needed for figure to appear
 
         return figure, all_axes
 
@@ -243,7 +237,6 @@ class FigureVisualiser(object):
     def _plot_control_commands(self, sim: Simulation, all_axes: AxesTuple):
         """
         Plots agent-commanded actions on the environment figure.
-
         :param sim: Simulation to plot control commands from
         :param all_axes: AxesTuple, collection of axes of subplots to plot on
         """
