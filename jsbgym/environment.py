@@ -23,7 +23,7 @@ class JsbSimEnv(gym.Env):
 
     JSBSIM_DT_HZ: int = 60  # JSBSim integration frequency
     metadata = {
-        "render_modes": ["human", "flightgear", "human_fg", "rgb_array"],
+        "render_modes": ["human", "flightgear"],
         "render_fps": 60,
     }
 
@@ -163,12 +163,6 @@ class JsbSimEnv(gym.Env):
                 self.flightgear_visualiser = FlightGearVisualiser(
                     self.sim, self.task.get_props_to_output(), flightgear_blocking
                 )
-        elif self.render_mode == "human_fg":
-            if not self.flightgear_visualiser:
-                self.flightgear_visualiser = FlightGearVisualiser(
-                    self.sim, self.task.get_props_to_output(), flightgear_blocking
-                )
-            self.flightgear_visualiser.plot(self.sim)
         else:
             super().render()
 
