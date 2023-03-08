@@ -123,6 +123,7 @@ class JsbSimEnv(gym.Env):
 
     def render(self, flightgear_blocking=True):
         if self.render_mode is None:
+            self.render_mode = "flightgear"
             assert self.spec is not None
             gym.logger.warn(
                 "You are calling render method without specifying any render mode. "
