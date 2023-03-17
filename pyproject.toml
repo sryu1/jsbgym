@@ -19,7 +19,7 @@ classifiers = [
 ]
 
 requires-python = ">=3.7"
-dependencies = ["numpy", "gymnasium", "jsbsim", "matplotlib"]
+dependencies = ["numpy", "gymnasium", "jsbsim", "matplotlib==3.6.3"]
 
 [project.urls]
 Homepage = "https://github.com/sryu1/jsbgym"
