@@ -45,12 +45,12 @@ class TestJsbSimInstance(unittest.TestCase):
         agent = RandomAgent(self.env.action_space)
         render_every = 5
         ep_reward = 0
-        done = False
+        terminated = False
         state = self.env.reset()
         step_number = 0
-        while not done:
+        while not terminated:
             action = agent.act(state)
-            state, reward, done, info = self.env.step(action)
+            state, reward, temrinated, truncated, info = self.env.step(action)
             ep_reward += reward
             if step_number % render_every == 0:
                 self.env.render()
@@ -64,12 +64,12 @@ class TestJsbSimInstance(unittest.TestCase):
 
         for _ in range(EPISODES):
             ep_reward = 0
-            done = False
+            terminated = False
             state = self.env.reset()
             step_number = 0
-            while not done:
+            while not terminated:
                 action = agent.act(state)
-                state, reward, done, info = self.env.step(action)
+                state, reward, terminated, info = self.env.step(action)
                 ep_reward += reward
                 if step_number % report_every == 0:
                     print(f"time:\t{self.env.sim.get_sim_time()} s")
@@ -82,7 +82,7 @@ class FlightGearRenderTest(unittest.TestCase):
     def setUp(
         self,
         plane: aircraft.Aircraft = aircraft.cessna172P,
-        task_type: Type[tasks.HeadingControlTask] = tasks.TurnHeadingControlTask,
+        task_type: Type[tasks.HeadingControlTask] = tasks.HeadingControlTask,
     ):
         self.env = None
         self.env = JsbSimEnv(aircraft=plane, task_type=task_type)
@@ -100,13 +100,13 @@ class FlightGearRenderTest(unittest.TestCase):
 
         for _ in range(EPISODES):
             ep_reward = 0
-            done = False
+            terminated = False
             state = self.env.reset()
             self.env.render(mode="flightgear")
             step_number = 0
-            while not done:
+            while not terminated:
                 action = agent.act(state)
-                state, reward, done, info = self.env.step(action)
+                state, reward, terminated, info = self.env.step(action)
                 ep_reward += reward
                 if step_number % render_every == 0:
                     self.env.render(mode="flightgear")
@@ -147,13 +147,13 @@ class TurnHeadingControlTest(unittest.TestCase):
 
         for _ in range(EPISODES):
             ep_reward = 0
-            done = False
+            terminated = False
             state = self.env.reset()
             self.env.render(mode="flightgear")
             step_number = 0
-            while not done:
+            while not terminated:
                 action = agent.act(state)
-                state, reward, done, info = self.env.step(action)
+                state, reward, terminated, truncated, info = self.env.step(action)
                 ep_reward += reward
                 if step_number % render_every == 0:
                     self.env.render(mode="flightgear")

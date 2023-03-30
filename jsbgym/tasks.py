@@ -34,10 +34,10 @@ class Task(ABC):
         :param action: sequence of floats, the agent's last action
         :param sim_steps: number of JSBSim integration steps to perform following action
             prior to making observation
-        :return: tuple of (observation, reward, done, info) where,
+        :return: tuple of (observation, reward, terminated, truncated, info) where,
             observation: array, agent's observation of the environment state
             reward: float, the reward for that step
-            done: bool, True if the episode is over else False
+            terminated: bool, True if the episode is over else False
             info: dict, optional, containing diagnostic info for debugging etc.
         """
 
@@ -157,26 +157,28 @@ class FlightTask(Task, ABC):
 
         self._update_custom_properties(sim)
         state = self.State(*(sim[prop] for prop in self.state_variables))
-        done = self._is_terminal(sim)
-        reward = self.assessor.assess(state, self.last_state, done)
-        if done:
+        terminated = self._is_terminal(sim)
+        truncated = False
+        reward = self.assessor.assess(state, self.last_state, terminated)
+        if terminated:
             reward = self._reward_terminal_override(reward, sim)
         if self.debug:
-            self._validate_state(state, done, action, reward)
+            self._validate_state(state, terminated, truncated, action, reward)
         self._store_reward(reward, sim)
         self.last_state = state
         info = {"reward": reward}
 
-        return state, reward.agent_reward(), done, info
+        return state, reward.agent_reward(), terminated, False, info
 
-    def _validate_state(self, state, done, action, reward):
+    def _validate_state(self, state, terminated, truncated, action, reward):
         if any(math.isnan(el) for el in state):  # float('nan') in state doesn't work!
             msg = (
                 f"Invalid state encountered!\n"
                 f"State: {state}\n"
                 f"Prev. State: {self.last_state}\n"
                 f"Action: {action}\n"
-                f"Terminal: {done}\n"
+                f"Terminal: {terminated}\n"
+                f"Trucantion: {truncated}\n"
                 f"Reward: {reward}"
             )
             warnings.warn(msg, RuntimeWarning)

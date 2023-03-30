@@ -309,7 +309,9 @@ class TestHeadingControlTask(unittest.TestCase):
             final_state_sim = self.get_perfect_state_sim(task, time_terminal=True)
             sim = TransitioningSimStub(initial_state_sim, final_state_sim)
 
-            state, reward, done, info = task.task_step(sim, self.dummy_action, 1)
+            state, reward, terminated, truncated, info = task.task_step(
+                sim, self.dummy_action, 1
+            )
 
             if positive_reward:
                 expected_reward = self.PERFECT_POSITIVE_REWARD
@@ -329,7 +331,9 @@ class TestHeadingControlTask(unittest.TestCase):
             final_state_sim = self.get_perfect_state_sim(task, time_terminal=False)
             sim = TransitioningSimStub(initial_state_sim, final_state_sim)
 
-            state, reward, done, info = task.task_step(sim, self.dummy_action, 1)
+            state, reward, terminated, truncated, info = task.task_step(
+                sim, self.dummy_action, 1
+            )
 
             if positive_reward:
                 expected_reward = self.PERFECT_POSITIVE_REWARD

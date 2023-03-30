@@ -10,7 +10,7 @@ class Agent(ABC):
         ...
 
     @abstractmethod
-    def observe(self, state, action, reward, done):
+    def observe(self, state, action, reward, terminated):
         ...
 
 
@@ -27,7 +27,7 @@ class RandomAgent(Agent):
     def act(self, _):
         return self.action_space.sample()
 
-    def observe(self, state, action, reward, done):
+    def observe(self, state, action, reward, terminated):
         # this agent type does not learn in response to observations
         pass
 
@@ -39,6 +39,6 @@ class ConstantAgent(Agent):
     def act(self, _):
         return self.constant_action
 
-    def observe(self, state, action, reward, done):
+    def observe(self, state, action, reward, terminated):
         # this agent type does not learn in response to observations
         pass
