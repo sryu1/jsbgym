@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "jsbgym"
-version = "0.1.3"
+version = "0.1.4"
 authors = [{ name = "sryu1" }]
 license = { text = "MIT" }
 description = "A package of reinforcement learning environments for flight control using the JSBSim flight dynamics model."
@@ -19,7 +19,7 @@ classifiers = [
 ]
 
 requires-python = ">=3.7"
-dependencies = ["numpy", "gymnasium", "jsbsim", "matplotlib==3.6.3"]
+dependencies = ["numpy", "gymnasium", "jsbsim", "matplotlib<=3.6.3"]
 
 [project.urls]
 Homepage = "https://github.com/sryu1/jsbgym"
