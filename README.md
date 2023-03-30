@@ -46,7 +46,7 @@ JSBGym implements two tasks for controlling the altitude and heading of aircraft
 
 ### Aircraft
 
-The environment can be configured to use one of three aircraft:
+The environment can be configured to use one of Six aircraft:
 
 * **Cessna172P** Light Aircraft
 * **PA28** Light Aircraft
@@ -55,18 +55,20 @@ The environment can be configured to use one of three aircraft:
 * **A320** Airliner
 * **B787** Airliner
 
+Some aircraft will not work until the next update of JSBSim.
+
 All aircraft except the Cessna 172P requires the aircraft to be downloaded via the launcher using the default FlightGear Hangar.
 
 Environment ID strings are constructed as follows:
 
 ```python
-f"JSBSim-{task}-{aircraft}-Shaping.STANDARD"
+f"JSBSim-{task}-{aircraft}-Shaping.STANDARD-v0"
 ```
 
 For example, to fly a Cessna on the Heading Control task,
 
 ```python
-env = gym.make('JSBSim-HeadingControlTask-Cessna172P-Shaping.STANDARD')
+env = gym.make("JSBSim-HeadingControlTask-Cessna172P-Shaping.STANDARD-v0")
 ```
 
 ## Visualisation
@@ -76,7 +78,7 @@ env = gym.make('JSBSim-HeadingControlTask-Cessna172P-Shaping.STANDARD')
 A basic plot of agent actions and current state information can be using `human` render mode by calling `env.render()` after specifying the render mode in `gym.make()`.
 
 ```python
-env = gym.make("JSBSim-HeadingControlTask-Cessna172P-Shaping.STANDARD", render_mode="human")
+env = gym.make("JSBSim-HeadingControlTask-Cessna172P-Shaping.STANDARD-v0", render_mode="human")
 env.reset()
 env.render()
 ```
@@ -86,7 +88,7 @@ env.render()
 Visualising with FlightGear requires the Gymnasium environment to be created with a FlightGear-enabled environment ID by specifying the render_mode in `gym.make()`. For example:
 
 ```python
-env = gym.make("JSBSim-HeadingControlTask-Cessna172P-Shaping.STANDARD", render_mode="flightgear")
+env = gym.make("JSBSim-HeadingControlTask-Cessna172P-Shaping.STANDARD-v0", render_mode="flightgear")
 env.reset()
 env.render()
 ```

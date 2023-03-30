@@ -30,7 +30,7 @@ def get_env_id(task_type, aircraft, shaping) -> str:
     :param shaping: HeadingControlTask.Shaping enum, the reward shaping setting
     :param enable_flightgear: True if FlightGear simulator is enabled for visualisation else False
     """
-    return f"JSBSim-{task_type.__name__}-{aircraft.name}-{shaping}"
+    return f"JSBSim-{task_type.__name__}-{aircraft.name}-{shaping}-v0"
 
 
 def get_env_id_kwargs_map() -> Dict[str, Tuple]:
