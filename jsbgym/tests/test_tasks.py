@@ -241,7 +241,7 @@ class TestHeadingControlTask(unittest.TestCase):
         steps = 1
         _ = self.task.observe_first_state(sim)
 
-        state, reward, is_terminal, info = self.task.task_step(
+        state, reward, is_terminal, truncated, info = self.task.task_step(
             sim, self.dummy_action, steps
         )
 
