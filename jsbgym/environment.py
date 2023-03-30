@@ -85,7 +85,7 @@ class JsbSimEnv(gym.Env):
         if action.shape != self.action_space.shape:
             raise ValueError("mismatch between action and action space size")
 
-        state, reward, terminated, info = self.task.task_step(
+        state, reward, terminated, truncated, info = self.task.task_step(
             self.sim, action, self.sim_steps_per_agent_step
         )
         observation = np.array(state)
