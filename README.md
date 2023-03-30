@@ -59,10 +59,18 @@ Some aircraft will not work until the next update of JSBSim.
 
 All aircraft except the Cessna 172P requires the aircraft to be downloaded via the launcher using the default FlightGear Hangar.
 
+### Shaping
+
+The environment can use three different shaping types:
+
+* **Shaping.STANDARD**
+* **Shaping.EXTRA**
+* **Shaping.EXTRA_SEQUENTIAL**
+
 Environment ID strings are constructed as follows:
 
 ```python
-f"JSBSim-{task}-{aircraft}-Shaping.STANDARD-v0"
+f"JSBSim-{task}-{aircraft}-{shaping}-v0"
 ```
 
 For example, to fly a Cessna on the Heading Control task,
@@ -129,5 +137,5 @@ JSBGym's environments have a continuous state and action space. The state is a 1
 
 ## Known Issues
 
-* Some aircraft when rendering with FlightGear will not start on the ground, but in the ground (A320 does not work completely with render)
-* Human render mode will not work due to Attribute error when calling render.
+* Some aircraft when rendering with FlightGear will not start on the ground, but in the ground (A320 does not work completely with render).
+* Human render mode will not work due to Attribute error when calling render with recent matplotlib versions.
