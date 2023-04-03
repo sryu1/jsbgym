@@ -70,13 +70,13 @@ The environment can use three different shaping types:
 Environment ID strings are constructed as follows:
 
 ```python
-f"JSBSim-{task}-{aircraft}-{shaping}-v0"
+f"{aircraft}-{task}-{shaping}-{flightgear}-v0"
 ```
 
 For example, to fly a Cessna on the Heading Control task,
 
 ```python
-env = gym.make("JSBSim-HeadingControlTask-Cessna172P-Shaping.STANDARD-v0")
+env = gym.make("Cessna172P-HeadingControlTask-Shaping.STANDARD-NoFG-v0")
 ```
 
 ## Visualisation
@@ -86,17 +86,17 @@ env = gym.make("JSBSim-HeadingControlTask-Cessna172P-Shaping.STANDARD-v0")
 A basic plot of agent actions and current state information can be using `human` render mode by calling `env.render()` after specifying the render mode in `gym.make()`.
 
 ```python
-env = gym.make("JSBSim-HeadingControlTask-Cessna172P-Shaping.STANDARD-v0", render_mode="human")
+env = gym.make("Cessna172P-HeadingControlTask-Shaping.STANDARD-NoFG-v0", render_mode="human")
 env.reset()
 env.render()
 ```
 
 ### 3D
 
-Visualising with FlightGear requires the Gymnasium environment to be created with a FlightGear-enabled environment ID by specifying the render_mode in `gym.make()`. For example:
+Visualising with FlightGear requires the Gymnasium environment to be created with a FlightGear-enabled environment ID by specifying the render_mode in `gym.make()` and changing the value after `shaping` to `FG`. Using this render mode while training is strongly discouraged due to an error occuring midway through the training (`Could not connect to socket for output!`).
 
 ```python
-env = gym.make("JSBSim-HeadingControlTask-Cessna172P-Shaping.STANDARD-v0", render_mode="flightgear")
+env = gym.make("Cessna172P-HeadingControlTask-Shaping.STANDARD-FG-v0", render_mode="flightgear")
 env.reset()
 env.render()
 ```

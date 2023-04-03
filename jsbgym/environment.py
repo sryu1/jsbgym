@@ -29,8 +29,8 @@ class JsbSimEnv(gym.Env):
 
     def __init__(
         self,
-        task_type: Type[HeadingControlTask],
         aircraft: Aircraft = cessna172P,
+        task_type: Type = HeadingControlTask,
         agent_interaction_freq: int = 5,
         shaping: Shaping = Shaping.STANDARD,
         render_mode: Optional[str] = None,
@@ -185,3 +185,33 @@ class JsbSimEnv(gym.Env):
             self.figure_visualiser.close()
         if self.flightgear_visualiser:
             self.flightgear_visualiser.close()
+
+
+class NoFGJsbSimEnv(JsbSimEnv):
+    """
+    An RL environment for JSBSim with rendering to FlightGear disabled.
+    This class exists to be used for training agents where visualisation is not
+    required. Otherwise, restrictions in JSBSim output initialisation cause it
+    to open a new socket for every single episode, eventually leading to
+    failure of the network.
+    """
+
+    JSBSIM_DT_HZ: int = 60  # JSBSim integration frequency
+    metadata = {
+        "render_modes": ["human", "rgb_array"],
+        "render_fps": 60,
+    }
+
+    def _init_new_sim(self, dt: float, aircraft: Aircraft, initial_conditions: Dict):
+        return Simulation(
+            sim_frequency_hz=dt,
+            aircraft=aircraft,
+            init_conditions=initial_conditions,
+            allow_flightgear_output=False,
+        )
+
+    def render(self, flightgear_blocking=True):
+        if self.render_mode == "flightgear" or self.render_mode == "human_fg":
+            raise ValueError("flightgear rendering is disabled for this class")
+        else:
+            super().render(flightgear_blocking)

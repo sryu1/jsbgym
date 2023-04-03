@@ -16,19 +16,14 @@ The jsbgym.Envs enum stores all registered environments as members with
 """
 
 for env_id, (
-    task,
     plane,
+    task,
     shaping,
+    enable_flightgear,
 ) in utils.get_env_id_kwargs_map().items():
-    entry_point = "jsbgym.environment:JsbSimEnv"
-    kwargs = dict(task_type=task, aircraft=plane, shaping=shaping)
+    if enable_flightgear:
+        entry_point = "gym_jsbsim.environment:JsbSimEnv"
+    else:
+        entry_point = "gym_jsbsim.environment:NoFGJsbSimEnv"
+    kwargs = dict(aircraft=plane, task_type=task, shaping=shaping)
     gym.envs.registration.register(id=env_id, entry_point=entry_point, kwargs=kwargs)
-
-# make an Enum storing every JSBGym environment ID for convenience and value safety
-Envs = enum.Enum.__call__(
-    "Envs",
-    [
-        (utils.AttributeFormatter.translate(env_id), env_id)
-        for env_id in utils.get_env_id_kwargs_map().keys()
-    ],
-)
