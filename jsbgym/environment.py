@@ -29,8 +29,8 @@ class JsbSimEnv(gym.Env):
 
     def __init__(
         self,
+        task_type: Type[HeadingControlTask],
         aircraft: Aircraft = cessna172P,
-        task_type: Type = HeadingControlTask,
         agent_interaction_freq: int = 5,
         shaping: Shaping = Shaping.STANDARD,
         render_mode: Optional[str] = None,
