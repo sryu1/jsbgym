@@ -46,7 +46,7 @@ def get_env_id_kwargs_map() -> Dict[str, Tuple]:
         for plane in (cessna172P, a320, f15, pa28, b787, f16):
             for shaping in (Shaping.STANDARD, Shaping.EXTRA, Shaping.EXTRA_SEQUENTIAL):
                 for enable_flightgear in (True, False):
-                    id = get_env_id(task_type, plane, shaping, enable_flightgear)
+                    id = get_env_id(plane, task_type, shaping, enable_flightgear)
                     assert id not in map
                     map[id] = (plane, task_type, shaping, enable_flightgear)
     return map
