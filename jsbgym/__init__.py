@@ -22,8 +22,8 @@ for env_id, (
     enable_flightgear,
 ) in utils.get_env_id_kwargs_map().items():
     if enable_flightgear:
-        entry_point = "gym_jsbsim.environment:JsbSimEnv"
+        entry_point = "jsbgym.environment:JsbSimEnv"
     else:
-        entry_point = "gym_jsbsim.environment:NoFGJsbSimEnv"
+        entry_point = "jsbgym.environment:NoFGJsbSimEnv"
     kwargs = dict(aircraft=plane, task_type=task, shaping=shaping)
     gym.envs.registration.register(id=env_id, entry_point=entry_point, kwargs=kwargs)
