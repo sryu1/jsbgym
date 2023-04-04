@@ -1,11 +1,13 @@
 # JSBGym
 
 [![Python: 3.7+](https://img.shields.io/badge/python-3.7+-blue.svg)](https://www.python.org/downloads/)
+[![PyPI Version](https://img.shields.io/pypi/v/jsbgym)](https://pypi.org/project/jsbgym)
+[![PyPI downloads](https://img.shields.io/pypi/dm/jsbgym.svg)](https://pypistats.org/packages/jsbgym)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-> ⚠️ **NOTE**: Some features will not work yet, as the original library this used was gym, but it is being converted to gymnasium. Also note that THIS WILL ONLY WORK WITH WINDOWS for now. This will only work with Windows, since there are some directories that are configured only for Windows.
+> **Note**: This library will only work with Windows.
 
-JSBGym provides reinforcement learning environments for the control of fixed-wing aircraft using the JSBSim flight dynamics model. JSBGym requires at least Python 3.7. The package's environments implement the Farama-Foundation's Gymnasium interface allowing environments to be created and interacted with in the usual way.
+JSBGym provides reinforcement learning environments for the control of fixed-wing aircraft using the JSBSim flight dynamics model. The package's environments implement the Farama-Foundation's Gymnasium interface allowing environments to be created and interacted with.
 
 ## Setup
 
@@ -18,10 +20,10 @@ If you would like to render the environment with FlightGear, install it from [he
 fgfs --version
 ```
 
-Open the console and install the required dependencies for python:
+Open the console and install jsbgym:
 
 ```console
-pip install git+https://github.com/sryu1/jsbgym
+pip install jsbgym
 ```
 
 ## Getting Started
@@ -48,12 +50,12 @@ JSBGym implements two tasks for controlling the altitude and heading of aircraft
 
 The environment can be configured to use one of Six aircraft:
 
-* **Cessna172P** Light Aircraft
-* **PA28** Light Aircraft
-* **F15** Fighter Jet
-* **F-16** Fighter Jet
-* **A320** Airliner
-* **B787** Airliner
+* **Cessna172P** Cessna 172P Skyhawk (Default FlightGear Aircraft)
+* **PA28** Piper PA-28-161 Warrior II
+* **F15** McDonnell Douglas F-15C Eagle (F-15C in FlightGear)
+* **F-16** General Dynamics F-16CJ Block 52
+* **A320** Airbus A320 (A320 Familiy in Flightgear)
+* **B747** Boeing 747-400
 
 Some aircraft will not work until the next update of JSBSim.
 
@@ -138,4 +140,4 @@ JSBGym's environments have a continuous state and action space. The state is a 1
 ## Known Issues
 
 * Some aircraft when rendering with FlightGear will not start on the ground, but in the ground (A320 does not work completely with render).
-* Human render mode will not work due to Attribute error when calling render with recent matplotlib versions.
+* Human render mode will not work due to Attribute error when calling render with matplotlib>=3.7.0
