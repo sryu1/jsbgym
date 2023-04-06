@@ -359,7 +359,7 @@ class FlightGearVisualiser(object):
                 print("FlightGear loading complete")
                 break
             else:
-                time.sleep(1)
+                time.sleep(0.1)
 
     def close(self):
         if self.flightgear_process:
