@@ -135,9 +135,6 @@ JSBGym's environments have a continuous state and action space. The state is a 1
  (name='fcs/rudder-cmd-norm', description='rudder commanded position, normalised', min=-1.0, max=1.0)
  ```
 
- Throttle will be 0.8 by default.
-
 ## Known Issues
 
-* Some aircraft when rendering with FlightGear will not start on the ground, but in the ground (A320 does not work completely with render).
-* Human render mode will not work due to Attribute error when calling render with matplotlib>=3.7.0
+* A320 has and error when rendering with flightgear.
