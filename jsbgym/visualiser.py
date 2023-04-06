@@ -271,14 +271,10 @@ class FlightGearVisualiser(object):
     SERVER = ""
     PORT = 5550
     PROTOCOL = "udp"
-    LOADED_MESSAGE = "loading cities done"
+    LOADED_MESSAGE = "Starting hard-coded terrain presampling"
     FLIGHTGEAR_TIME_FACTOR = 1  # sim speed relative to realtime, higher is faster
     TIME = "morning"
-    EXTRA_AIRCRAFT_LOCATION = (
-        "C:/Users/"
-        + os.getlogin()
-        + "/FlightGear/Downloads\Aircraft\org.flightgear.fgaddon.stable_2020\Aircraft"
-    )
+    # EXTRA_AIRCRAFT_LOCATION = ("C:/Users/" + os.getlogin() + "/FlightGear/Downloads\Aircraft\org.flightgear.fgaddon.stable_2020\Aircraft")
 
     def __init__(
         self, sim: Simulation, print_props: Tuple[prp.Property], block_until_loaded=True
@@ -343,7 +339,7 @@ class FlightGearVisualiser(object):
         disable_ai_arg = "--disable-ai-traffic"
         disable_live_weather_arg = "--disable-real-weather-fetch"
         time_of_day_arg = "--timeofday=" + FlightGearVisualiser.TIME
-        extra_aircraft = "--fg-aircraft=" + FlightGearVisualiser.EXTRA_AIRCRAFT_LOCATION
+        # extra_aircraft = "--fg-aircraft=" + FlightGearVisualiser.EXTRA_AIRCRAFT_LOCATION
         return (
             flightgear_cmd,
             aircraft_arg,
@@ -352,7 +348,7 @@ class FlightGearVisualiser(object):
             disable_ai_arg,
             disable_live_weather_arg,
             time_of_day_arg,
-            extra_aircraft,
+        #     extra_aircraft,
         )
 
     def _block_until_flightgear_loaded(self):
@@ -362,7 +358,7 @@ class FlightGearVisualiser(object):
                 print("FlightGear loading complete")
                 break
             else:
-                time.sleep(0.1)
+                time.sleep(1)
 
     def close(self):
         if self.flightgear_process:
