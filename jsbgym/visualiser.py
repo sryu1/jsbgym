@@ -352,6 +352,7 @@ class FlightGearVisualiser(object):
         while True:
             msg_out = self.flightgear_process.stdout.readline().decode()
             if self.LOADED_MESSAGE in msg_out:
+                time.sleep(5)
                 print("FlightGear loading complete")
                 break
             else:
