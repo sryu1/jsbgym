@@ -39,12 +39,11 @@ observation, reward, terminated, truncated, info = env.step(action)
 
 ## Environments
 
-### Task
+Environment ID strings are constructed as follows:
 
-JSBGym implements two tasks for controlling the altitude and heading of aircraft:
-
-* **HeadingControlTask**: aircraft must fly in a straight line, maintaining its initial altitude and direction of travel (heading)
-* **TurnHeadingControlTask**: aircraft must turn to face a random target heading while maintaining their initial altitude
+```python
+f"{aircraft}-{task}-{shaping}-{flightgear}-v0"
+```
 
 ### Aircraft
 
@@ -53,13 +52,20 @@ The environment can be configured to use one of Six aircraft:
 * **Cessna172P** Cessna 172P Skyhawk (Default FlightGear Aircraft)
 * **PA28** Piper PA-28-161 Warrior II
 * **F15** McDonnell Douglas F-15C Eagle (F-15C in FlightGear)
-* **F-16** General Dynamics F-16CJ Block 52
+* **F16** General Dynamics F-16CJ Block 52
 * **A320** Airbus A320 (A320 Familiy in Flightgear)
 * **B747** Boeing 747-400
 
 Some aircraft will not work until the next update of JSBSim.
 
 All aircraft except the Cessna 172P requires the aircraft to be downloaded via the launcher using the default FlightGear Hangar.
+
+### Task
+
+JSBGym implements two tasks for controlling the altitude and heading of aircraft:
+
+* **HeadingControlTask**: aircraft must fly in a straight line, maintaining its initial altitude and direction of travel (heading)
+* **TurnHeadingControlTask**: aircraft must turn to face a random target heading while maintaining their initial altitude
 
 ### Shaping
 
@@ -69,13 +75,13 @@ The environment can use three different shaping types:
 * **Shaping.EXTRA**
 * **Shaping.EXTRA_SEQUENTIAL**
 
-Environment ID strings are constructed as follows:
+### FlightGear
 
-```python
-f"{aircraft}-{task}-{shaping}-{flightgear}-v0"
-```
+If using FlightGear as a render mode, use "FG", if not, use "NoFG"
 
-For example, to fly a Cessna on the Heading Control task,
+### Environment ID
+
+To fly a Cessna on the Heading Control task withoug using FlightGear,
 
 ```python
 env = gym.make("Cessna172P-HeadingControlTask-Shaping.STANDARD-NoFG-v0")
