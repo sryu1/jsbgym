@@ -212,6 +212,6 @@ class NoFGJsbSimEnv(JsbSimEnv):
 
     def render(self, flightgear_blocking=True):
         if self.render_mode == "flightgear" or self.render_mode == "human_fg":
-            raise ValueError("flightgear rendering is disabled for this class")
+            raise ValueError("FlightGear rendering is disabled for this class")
         else:
             super().render(flightgear_blocking)
