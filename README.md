@@ -51,6 +51,7 @@ The environment can be configured to use one of Six aircraft:
 
 * **Cessna172P** Cessna 172P Skyhawk (Default FlightGear Aircraft)
 * **PA28** Piper PA-28-161 Warrior II
+* **J3** Piper J-3 Cub
 * **F15** McDonnell Douglas F-15C Eagle (F-15C in FlightGear)
 * **F16** General Dynamics F-16CJ Block 52
 * **A320** Airbus A320 (A320 Familiy in Flightgear)
