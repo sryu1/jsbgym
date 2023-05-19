@@ -22,6 +22,7 @@ class Aircraft(
 
 cessna172P = Aircraft("c172p", "c172p", "Cessna172P", 120)
 pa28 = Aircraft("pa28", "PA28-161-180", "PA28", 130)
+j3 = Aircraft("J3Cub", "J3Cub", "J3", 70)
 f15 = Aircraft("f15", "f15c", "F15", 500)
 f16 = Aircraft("f16", "f16-block-52", "F16", 550)
 a320 = Aircraft("A320", "A320-200-CFM", "A320", 480)
