@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "jsbgym"
-version = "0.1.8"
+version = "0.1.9"
 authors = [{ name = "sryu1" }]
 readme = "README.md"
 license = { text = "MIT" }
@@ -20,7 +20,7 @@ classifiers = [
 ]
 
 requires-python = ">=3.7"
-dependencies = ["numpy", "gymnasium", "jsbsim", "matplotlib<=3.6.3"]
+dependencies = ["numpy", "gymnasium", "jsbsim", "matplotlib"]
 
 [project.urls]
 Homepage = "https://github.com/sryu1/jsbgym"
