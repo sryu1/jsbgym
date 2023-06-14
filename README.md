@@ -9,9 +9,11 @@
 
 JSBGym provides reinforcement learning environments for the control of fixed-wing aircraft using the JSBSim flight dynamics model. The package's environments implement the Farama-Foundation's Gymnasium interface allowing environments to be created and interacted with.
 
+![Example](docs/J3.gif)
+
 ## Setup
 
-Firstly, install [JSBSim](https://github.com/JSBSim-Team/jsbsim). Make sure that it is installed in `C:/JSBSim`
+Firstly, install [JSBSim](https://github.com/JSBSim-Team/jsbsim/releases). Make sure that it is installed in `C:/JSBSim`
 
 If you would like to render the environment with FlightGear, install it from [here](https://sourceforge.net/projects/flightgear/). Make sure the FlightGear bin directory is in PATH (Usually `C:\Program Files\FlightGear 2020.3\bin`)and there is a system variable called `FG_ROOT` with the FG data folder as it's value (Usually `C:\Program Files\FlightGear 2020.3\data`). If you have installed the aircraft to a different location, add the folder to the `FG_AIRCRAFT` system variable.
 3D visualisation requires installation of the FlightGear simulator. Confirm it is runnable from terminal with:
@@ -47,7 +49,7 @@ f"{aircraft}-{task}-{shaping}-{flightgear}-v0"
 
 ### Aircraft
 
-The environment can be configured to use one of Six aircraft:
+The environment can be configured to use one of seven aircraft:
 
 * **Cessna172P** Cessna 172P Skyhawk (Default FlightGear Aircraft)
 * **PA28** Piper PA-28-161 Warrior II
@@ -63,8 +65,8 @@ All aircraft except the Cessna 172P requires the aircraft to be downloaded via t
 
 JSBGym implements two tasks for controlling the altitude and heading of aircraft:
 
-* **HeadingControlTask**: aircraft must fly in a straight line, maintaining its initial altitude and direction of travel (heading)
-* **TurnHeadingControlTask**: aircraft must turn to face a random target heading while maintaining their initial altitude
+* **HeadingControlTask** aircraft must fly in a straight line, maintaining its initial altitude and direction of travel (heading)
+* **TurnHeadingControlTask** aircraft must turn to face a random target heading while maintaining their initial altitude
 
 ### Shaping
 
@@ -76,7 +78,7 @@ The environment can use three different shaping types:
 
 ### FlightGear
 
-If using FlightGear as a render mode, use "FG", if not, use "NoFG"
+If using FlightGear as a render mode, use `FG`, if not, use `NoFG`
 
 ### Environment ID
 
