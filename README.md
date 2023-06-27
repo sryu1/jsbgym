@@ -11,6 +11,8 @@ JSBGym provides reinforcement learning environments for the control of fixed-win
 
 ![Example](docs/J3.gif)
 
+Pretrained models can be found [here](https://huggingface.co/sryu1/jsbgym_models)
+
 ## Setup
 
 Firstly, install [JSBSim](https://github.com/JSBSim-Team/jsbsim/releases). Make sure that it is installed in `C:/JSBSim`
@@ -56,8 +58,10 @@ The environment can be configured to use one of seven aircraft:
 * **J3** Piper J-3 Cub
 * **F15** McDonnell Douglas F-15C Eagle (F-15C in FlightGear)
 * **F16** General Dynamics F-16CJ Block 52
+* **OV10** North American OV-10A USAFE Bronco
 * **A320** Airbus A320 (A320 Familiy in Flightgear)
 * **B747** Boeing 747-400
+* **MD11** McDonnell Douglas MD-11
 
 All aircraft except the Cessna 172P requires the aircraft to be downloaded via the launcher using the default FlightGear Hangar.
 
