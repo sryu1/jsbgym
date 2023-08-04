@@ -145,7 +145,3 @@ JSBGym's environments have a continuous state and action space. The state is a 1
  (name='fcs/elevator-cmd-norm', description='elevator commanded position, normalised', min=-1.0, max=1.0)
  (name='fcs/rudder-cmd-norm', description='rudder commanded position, normalised', min=-1.0, max=1.0)
  ```
-
-## Known Issues
-
-* A320 has and error when rendering with flightgear.
