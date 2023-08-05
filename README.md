@@ -93,7 +93,11 @@ env = gym.make("Cessna172P-HeadingControlTask-Shaping.STANDARD-NoFG-v0")
 
 ### 2D
 
-A basic plot of agent actions and current state information can be using `human` render mode by calling `env.render()` after specifying the render mode in `gym.make()`.
+A basic plot of agent actions and current state information can be using `human` render mode by calling `env.render()` after specifying the render mode in `gym.make()`. For Linux systems, an additional package must be downloaded: 
+
+```console
+sudo apt-get install python3-tk
+```
 
 ```python
 env = gym.make("Cessna172P-HeadingControlTask-Shaping.STANDARD-NoFG-v0", render_mode="human")

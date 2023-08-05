@@ -2,12 +2,12 @@ import gymnasium as gym
 import subprocess
 import time
 import os
+import matplotlib as mpt
 import matplotlib.pyplot as plt
 import jsbgym.properties as prp
 from jsbgym.aircraft import Aircraft
 from jsbgym.simulation import Simulation
 from typing import NamedTuple, Tuple
-
 
 class AxesTuple(NamedTuple):
     """Holds references to figure subplots (axes)"""
@@ -54,6 +54,7 @@ class FigureVisualiser(object):
         Creates or updates a 3D plot of the episode.
         :param sim: Simulation that will be plotted
         """
+        mpt.use("TkAgg")
         if not self.figure:
             self.figure, self.axes = self._plot_configure()
 
