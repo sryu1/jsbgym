@@ -13,7 +13,7 @@ class Simulation(object):
     """
 
     encoding = "utf-8"  # encoding of bytes returned by JSBSim Cython funcs
-    ROOT_DIR = os.path.abspath("C:\JSBSim")
+    ROOT_DIR = os.path.abspath(jsbsim.__path__[0])
     OUTPUT_FILE = "flightgear.xml"
     LONGITUDINAL = "longitudinal"
     FULL = "full"
