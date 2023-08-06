@@ -5,7 +5,6 @@
 [![PyPI downloads](https://img.shields.io/pypi/dm/jsbgym.svg)](https://pypistats.org/packages/jsbgym)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-
 JSBGym provides reinforcement learning environments for the control of fixed-wing aircraft using the JSBSim flight dynamics model. The package's environments implement the Farama-Foundation's Gymnasium interface allowing environments to be created and interacted with.
 
 ![Example](docs/J3.gif)
@@ -14,17 +13,25 @@ Pretrained models can be found [here](https://huggingface.co/sryu1/jsbgym_models
 
 ## Setup
 
-Open the console and install jsbgym:
+Open a terminal and install jsbgym:
 
 ```console
 pip install jsbgym
 ```
 
-If you would like to render the environment with FlightGear, install it from [here](https://sourceforge.net/projects/flightgear/). Make sure the FlightGear bin directory is in PATH (Usually `C:\Program Files\FlightGear 2020.3\bin` for Windows, for Linux, rename the AppImage file to fgfs.AppImage and place it in /usr/local/bin/fgfs) and there is a system variable called `FG_ROOT` with the FG data folder as it's value (Usually `C:\Program Files\FlightGear 2020.3\data` for Windows, for linux, the data file must be downloaded by downloading from [here](https://sourceforge.net/projects/flightgear/files/release-2020.3/) (approximately 2 GB) then in terminal, enter
+For Linux systems, rendering with "human" mode will require an additional package:
+
+```console
+sudo apt-get install python3-tk
+```
+
+To render the environment with FlightGear, dowloand and install it from [here](https://sourceforge.net/projects/flightgear/). Make sure the FlightGear bin directory is in PATH (Usually `C:\Program Files\FlightGear 2020.3\bin`) and if not already existant, add a system variable called `FG_ROOT` with the FG data folder as it's value (Usually `C:\Program Files\FlightGear 2020.3\data`). For Linux, rename the AppImage file to fgfs.AppImage and place it in /usr/local/bin/fgfs. The data file must also be downloaded from [here](https://sourceforge.net/projects/flightgear/files/release-2020.3/) (approximately 2 GB) then in terminal, enter
+
 ```console
 export FG_ROOT=/path/to/folder
 ```
-). If you have installed the aircraft to a different location, add the folder to the `FG_AIRCRAFT` system variable.
+
+If there are aircraft installed in a different location, add the folder to the `FG_AIRCRAFT` system variable.
 3D visualisation requires installation of the FlightGear simulator. Confirm it is runnable from terminal with:
 
 ```console
@@ -97,11 +104,7 @@ env = gym.make("Cessna172P-HeadingControlTask-Shaping.STANDARD-NoFG-v0")
 
 ### 2D
 
-A basic plot of agent actions and current state information can be using `human` render mode by calling `env.render()` after specifying the render mode in `gym.make()`. For Linux systems, an additional package must be downloaded: 
-
-```console
-sudo apt-get install python3-tk
-```
+A basic plot of agent actions and current state information can be using `human` render mode by calling `env.render()` after specifying the render mode in `gym.make()`.
 
 ```python
 env = gym.make("Cessna172P-HeadingControlTask-Shaping.STANDARD-NoFG-v0", render_mode="human")
