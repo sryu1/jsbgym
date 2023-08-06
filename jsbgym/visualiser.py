@@ -9,6 +9,7 @@ from jsbgym.aircraft import Aircraft
 from jsbgym.simulation import Simulation
 from typing import NamedTuple, Tuple
 
+
 class AxesTuple(NamedTuple):
     """Holds references to figure subplots (axes)"""
 
