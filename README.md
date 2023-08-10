@@ -71,7 +71,7 @@ The environment can be configured to use one of seven aircraft:
 * **B747** Boeing 747-400
 * **MD11** McDonnell Douglas MD-11
 
-All aircraft except the Cessna 172P requires the aircraft to be downloaded via the launcher using the default FlightGear Hangar.
+All aircraft except the Cessna 172P requires the aircraft to be downloaded via the launcher using the default FlightGear Hangar if using flightgear.
 
 ### Task
 
