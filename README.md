@@ -7,7 +7,7 @@
 
 JSBGym provides reinforcement learning environments for the control of fixed-wing aircraft using the JSBSim flight dynamics model. The package's environments implement the Farama-Foundation's Gymnasium interface allowing environments to be created and interacted with.
 
-![Example](docs/J3.gif)
+![Example](https://github.com/sryu1/jsbgym/blob/main/docs/J3.gif)
 
 Pretrained models can be found [here](https://huggingface.co/sryu1/jsbgym_models)
 
