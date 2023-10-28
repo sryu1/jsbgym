@@ -2,7 +2,7 @@ import gymnasium as gym
 import numpy as np
 from jsbgym.tasks import Shaping, HeadingControlTask
 from jsbgym.simulation import Simulation
-from jsbgym.visualiser import FigureVisualiser, FlightGearVisualiser
+from jsbgym.visualiser import FigureVisualiser, FlightGearVisualiser, GraphVisualiser
 from jsbgym.aircraft import Aircraft, cessna172P
 from typing import Optional, Type, Tuple, Dict
 
@@ -23,7 +23,7 @@ class JsbSimEnv(gym.Env):
 
     JSBSIM_DT_HZ: int = 60  # JSBSim integration frequency
     metadata = {
-        "render_modes": ["human", "flightgear", "human_fg", "rgb_array"],
+        "render_modes": ["human", "flightgear", "human_fg", "graph"],
         "render_fps": 60,
     }
 
@@ -62,6 +62,7 @@ class JsbSimEnv(gym.Env):
         # set visualisation objects
         self.figure_visualiser: FigureVisualiser = None
         self.flightgear_visualiser: FlightGearVisualiser = None
+        self.graph_visualiser: GraphVisualiser = None
         self.step_delay = None
         self.render_mode = render_mode
 
@@ -170,6 +171,12 @@ class JsbSimEnv(gym.Env):
                     self.sim, self.task.get_props_to_output(), flightgear_blocking
                 )
             self.flightgear_visualiser.plot(self.sim)
+        elif self.render_mode == "graph":
+            if not self.graph_visualiser:
+                self.graph_visualiser = GraphVisualiser(
+                    self.sim, self.task.get_props_to_output()
+                )
+            self.graph_visualiser.plot(self.sim)
         else:
             super().render()
 
@@ -185,6 +192,8 @@ class JsbSimEnv(gym.Env):
             self.figure_visualiser.close()
         if self.flightgear_visualiser:
             self.flightgear_visualiser.close()
+        if self.graph_visualiser:
+            self.graph_visualiser.close()
 
 
 class NoFGJsbSimEnv(JsbSimEnv):
@@ -198,7 +207,7 @@ class NoFGJsbSimEnv(JsbSimEnv):
 
     JSBSIM_DT_HZ: int = 60  # JSBSim integration frequency
     metadata = {
-        "render_modes": ["human", "rgb_array"],
+        "render_modes": ["human", "graph"],
         "render_fps": 60,
     }
 

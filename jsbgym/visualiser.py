@@ -1,7 +1,6 @@
 import gymnasium as gym
 import subprocess
 import time
-import os
 import matplotlib as mpt
 import matplotlib.pyplot as plt
 import jsbgym.properties as prp
@@ -69,7 +68,8 @@ class FigureVisualiser(object):
         self._print_state(sim)
         self._plot_control_states(sim, self.axes)
         self._plot_control_commands(sim, self.axes)
-        plt.pause(self.PLOT_PAUSE_SECONDS)  # voodoo pause needed for figure to update
+        # voodoo pause needed for figure to update
+        plt.pause(self.PLOT_PAUSE_SECONDS)
 
     def close(self):
         if self.figure:
@@ -183,7 +183,8 @@ class FigureVisualiser(object):
         )
 
         plt.show()
-        plt.pause(self.PLOT_PAUSE_SECONDS)  # voodoo pause needed for figure to appear
+        # voodoo pause needed for figure to appear
+        plt.pause(self.PLOT_PAUSE_SECONDS)
 
         return figure, all_axes
 
@@ -256,6 +257,43 @@ class FigureVisualiser(object):
         all_axes.axes_rudder.plot(
             [rud_cmd], [0], "bo", mfc="none", markersize=10, clip_on=False
         )
+
+
+class GraphVisualiser(object):
+    PLOT_PAUSE_SECONDS = 0.0001
+
+    def __init__(self, _: Simulation, print_props: Tuple[prp.Property]):
+        self.print_props = print_props
+        self.figure: plt.Figure = None
+
+    def plot(self, sim: Simulation):
+        mpt.use("TkAgg")
+        plt.ion()
+        if not self.figure:
+            self.figure = plt.figure(figsize=(6, 11))
+        ax = self.figure.add_subplot(111, projection="3d")
+        alt = []
+        long = []
+        lat = []
+
+        alt.append(sim[prp.altitude_sl_ft])
+        long.append(sim[prp.lng_geoc_deg])
+        lat.append(sim[prp.lat_geod_deg])
+
+        ax.scatter(lat, long, alt)
+        ax.set_xlabel("Lattitude")
+        ax.set_ylabel("Longitude")
+        ax.set_zlabel("Altitude")
+
+        plt.show()
+        # voodoo pause needed for figure to appear
+        plt.pause(self.PLOT_PAUSE_SECONDS)
+
+    def close(self):
+        print("close")
+        if self.figure:
+            plt.close(self.figure)
+            self.figure = None
 
 
 class FlightGearVisualiser(object):
