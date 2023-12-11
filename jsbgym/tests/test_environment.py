@@ -215,7 +215,7 @@ class TestGymRegistration(unittest.TestCase):
     def test_gym_environments_configured_correctly(self):
         Shaping = tasks.Shaping
         for task in (tasks.HeadingControlTask, tasks.TurnHeadingControlTask):
-            for plane in (aircraft.cessna172P, aircraft.f15, aircraft.a320):
+            for plane in (aircraft.C172, aircraft.f15, aircraft.a320):
                 for shaping in (Shaping.STANDARD, Shaping.EXTRA_SEQUENTIAL):
                     for enable_flightgear in (True, False):
                         id = utils.get_env_id(task, plane, shaping, enable_flightgear)

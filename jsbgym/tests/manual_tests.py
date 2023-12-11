@@ -81,7 +81,7 @@ class TestJsbSimInstance(unittest.TestCase):
 class FlightGearRenderTest(unittest.TestCase):
     def setUp(
         self,
-        plane: aircraft.Aircraft = aircraft.cessna172P,
+        plane: aircraft.Aircraft = aircraft.C172,
         task_type: Type[tasks.HeadingControlTask] = tasks.HeadingControlTask,
     ):
         self.env = None
@@ -92,7 +92,7 @@ class FlightGearRenderTest(unittest.TestCase):
         self.env.close()
 
     def test_render_steady_level_flight(self):
-        self.setUp(plane=aircraft.cessna172P, task_type=tasks.HeadingControlTask)
+        self.setUp(plane=aircraft.C172, task_type=tasks.HeadingControlTask)
         agent = ConstantAgent(self.env.action_space)
         render_every = 5
         report_every = 20
@@ -123,7 +123,7 @@ class FlightGearRenderTest(unittest.TestCase):
 class TurnHeadingControlTest(unittest.TestCase):
     def setUp(
         self,
-        plane: aircraft.Aircraft = aircraft.cessna172P,
+        plane: aircraft.Aircraft = aircraft.C172,
         task_type: Type[tasks.HeadingControlTask] = tasks.TurnHeadingControlTask,
         shaping: tasks.Shaping = tasks.Shaping.STANDARD,
     ):

@@ -3,7 +3,7 @@ import numpy as np
 from jsbgym.tasks import Shaping, HeadingControlTask
 from jsbgym.simulation import Simulation
 from jsbgym.visualiser import FigureVisualiser, FlightGearVisualiser, GraphVisualiser
-from jsbgym.aircraft import Aircraft, cessna172P
+from jsbgym.aircraft import Aircraft, c172
 from typing import Optional, Type, Tuple, Dict
 import warnings
 
@@ -30,7 +30,7 @@ class JsbSimEnv(gym.Env):
 
     def __init__(
         self,
-        aircraft: Aircraft = cessna172P,
+        aircraft: Aircraft = c172,
         task_type: Type = HeadingControlTask,
         agent_interaction_freq: int = 5,
         shaping: Shaping = Shaping.STANDARD,
@@ -129,7 +129,7 @@ class JsbSimEnv(gym.Env):
                 pass
         if "NoFG" not in str(self):
             warnings.warn(
-                "When training, use NoFG instead of FG in the env_id. Using FG will cause errors while training after a while."
+                "If training, use NoFG instead of FG in the env_id. Using FG will cause errors while training after a while."
             )
 
         if self.aircraft.name == "A320" and self.render_mode == "flightgear":

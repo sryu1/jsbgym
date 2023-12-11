@@ -4,7 +4,7 @@ import time
 from mpl_toolkits.mplot3d import Axes3D  # required for 3d plotting
 from typing import Dict, Union
 import jsbgym.properties as prp
-from jsbgym.aircraft import Aircraft, cessna172P
+from jsbgym.aircraft import Aircraft, c172
 
 
 class Simulation(object):
@@ -21,7 +21,7 @@ class Simulation(object):
     def __init__(
         self,
         sim_frequency_hz: float = 60.0,
-        aircraft: Aircraft = cessna172P,
+        aircraft: Aircraft = c172,
         init_conditions: Dict[prp.Property, float] = None,
         allow_flightgear_output: bool = True,
     ):

@@ -181,7 +181,7 @@ class TestSimulation(unittest.TestCase):
 
 def basic_task():
     """A simple task involving initing a JSBSimInstance to test multiprocessing."""
-    model = aircraft.cessna172P
+    model = aircraft.C172
     time.sleep(0.05)
     fdm = Simulation(aircraft=model)
     fdm.run()

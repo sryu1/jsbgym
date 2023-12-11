@@ -7,7 +7,7 @@
 
 JSBGym provides reinforcement learning environments for the control of fixed-wing aircraft using the JSBSim flight dynamics model. The package's environments implement the Farama-Foundation's Gymnasium interface allowing environments to be created and interacted with.
 
-![Example](https://github.com/sryu1/jsbgym/blob/main/docs/J3.gif)
+![Example](https://github.com/sryu1/jsbgym/blob/main/docs/J3.gif?raw=true)
 
 Pretrained models can be found [here](https://huggingface.co/sryu1/jsbgym_models)
 
@@ -61,15 +61,17 @@ f"{aircraft}-{task}-{shaping}-{flightgear}-v0"
 
 The environment can be configured to use one of nine aircraft:
 
-* **Cessna172P** Cessna 172P Skyhawk (Default FlightGear Aircraft)
+* **C172** Cessna 172P Skyhawk (Default FlightGear Aircraft)
 * **PA28** Piper PA-28-161 Warrior II
 * **J3** Piper J-3 Cub
 * **F15** McDonnell Douglas F-15C Eagle (F-15C in FlightGear)
 * **F16** General Dynamics F-16CJ Block 52
 * **OV10** North American OV-10A USAFE Bronco
+* **PC7** Pilatus PC-7
 * **A320** Airbus A320 (A320 Familiy in Flightgear)
 * **B747** Boeing 747-400
 * **MD11** McDonnell Douglas MD-11
+* **DHC6** de Havilland Canada DHC-6-300 Twin Otter
 
 All aircraft except the Cessna 172P requires the aircraft to be downloaded via the launcher using the default FlightGear Hangar if using flightgear.
 
@@ -97,7 +99,7 @@ If using FlightGear as a render mode, use `FG`, if not, use `NoFG`
 To fly a Cessna on the Heading Control task withoug using FlightGear,
 
 ```python
-env = gym.make("Cessna172P-HeadingControlTask-Shaping.STANDARD-NoFG-v0")
+env = gym.make("C172-HeadingControlTask-Shaping.STANDARD-NoFG-v0")
 ```
 
 ## Visualisation
@@ -107,7 +109,7 @@ env = gym.make("Cessna172P-HeadingControlTask-Shaping.STANDARD-NoFG-v0")
 A basic plot of agent actions and current state information can be using `human` render mode by calling `env.render()` after specifying the render mode in `gym.make()`.
 
 ```python
-env = gym.make("Cessna172P-HeadingControlTask-Shaping.STANDARD-NoFG-v0", render_mode="human")
+env = gym.make("C172-HeadingControlTask-Shaping.STANDARD-NoFG-v0", render_mode="human")
 env.reset()
 env.render()
 ```
@@ -117,7 +119,7 @@ env.render()
 Visualising with FlightGear requires the Gymnasium environment to be created with a FlightGear-enabled environment ID by specifying the render_mode in `gym.make()` and changing the value after `{shaping}` to `FG`. Using this render mode while training is strongly discouraged due to an error occuring midway through the training (`Could not connect to socket for output!`).
 
 ```python
-env = gym.make("Cessna172P-HeadingControlTask-Shaping.STANDARD-FG-v0", render_mode="flightgear")
+env = gym.make("C172-HeadingControlTask-Shaping.STANDARD-FG-v0", render_mode="flightgear")
 env.reset()
 env.render()
 ```

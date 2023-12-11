@@ -20,12 +20,14 @@ class Aircraft(
         return self.cruise_speed_kts * self.KTS_TO_FT_PER_S
 
 
-cessna172P = Aircraft("c172p", "c172p", "Cessna172P", 120)
+c172 = Aircraft("c172p", "c172p", "C172", 120)
 pa28 = Aircraft("pa28", "PA28-161-180", "PA28", 130)
 j3 = Aircraft("J3Cub", "J3Cub", "J3", 70)
 f15 = Aircraft("f15", "f15c", "F15", 500)
 f16 = Aircraft("f16", "f16-block-52", "F16", 550)
 ov10 = Aircraft("OV10", "OV10_USAFE", "OV10", 200)
+pc7 = Aircraft("pc7", "pc7", "PC7", 170)
 a320 = Aircraft("A320", "A320-200-CFM", "A320", 250)
 b747 = Aircraft("B747", "747-400", "B747", 250)
 md11 = Aircraft("MD11", "MD-11", "MD11", 250)
+dhc6 = Aircraft("DHC6", "dhc6jsb", "DHC6", 170)

@@ -5,7 +5,7 @@ import sys
 import jsbgym.properties as prp
 from jsbgym import rewards, utils
 from jsbgym.assessors import Assessor, AssessorImpl
-from jsbgym.aircraft import Aircraft, cessna172P
+from jsbgym.aircraft import Aircraft, C172
 from jsbgym.tasks import Shaping, HeadingControlTask, TurnHeadingControlTask
 from jsbgym.tests.stubs import SimStub, TransitioningSimStub
 
@@ -14,7 +14,7 @@ class TestHeadingControlTask(unittest.TestCase):
     default_shaping = Shaping.STANDARD
     default_episode_time_s = 1
     default_step_frequency_hz = 1
-    default_aircraft = cessna172P
+    default_aircraft = C172
     default_steps_remaining_non_terminal = 10
     default_positive_rewards = True
 
