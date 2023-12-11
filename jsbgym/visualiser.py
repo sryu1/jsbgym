@@ -271,26 +271,33 @@ class GraphVisualiser(object):
         plt.ion()
         if not self.figure:
             self.figure = plt.figure(figsize=(6, 11))
-        ax = self.figure.add_subplot(111, projection="3d")
-        alt = []
-        long = []
-        lat = []
+            plt.show()
+            self.ax = self.figure.add_subplot(111, projection="3d")
 
-        alt.append(sim[prp.altitude_sl_ft])
-        long.append(sim[prp.lng_geoc_deg])
-        lat.append(sim[prp.lat_geod_deg])
+        self.alt = sim[prp.altitude_sl_ft]
+        self.long = sim[prp.lng_geoc_deg]
+        self.lat = sim[prp.lat_geod_deg]
 
-        ax.scatter(lat, long, alt)
-        ax.set_xlabel("Lattitude")
-        ax.set_ylabel("Longitude")
-        ax.set_zlabel("Altitude")
+        self.ax.set_xlabel("Lattitude")
+        self.ax.set_ylabel("Longitude")
+        self.ax.set_zlabel("Altitude")
 
-        plt.show()
+        self.ax.scatter(self.lat, self.long, self.alt)
+
         # voodoo pause needed for figure to appear
         plt.pause(self.PLOT_PAUSE_SECONDS)
 
+    def reset(self):
+        plt.cla()
+        if not self.figure:
+            self.figure = plt.figure(figsize=(6, 11))
+            plt.show()
+            self.ax = self.figure.add_subplot(111, projection="3d")
+            self.ax.set_xlabel("Lattitude")
+            self.ax.set_ylabel("Longitude")
+            self.ax.set_zlabel("Altitude")
+
     def close(self):
-        print("close")
         if self.figure:
             plt.close(self.figure)
             self.figure = None

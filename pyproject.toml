@@ -4,10 +4,10 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "jsbgym"
-version = "0.2.0"
+version = "0.3.0"
 authors = [{ name = "sryu1" }]
 readme = "README.md"
-license = { text = "MIT" }
+license = { text = "MIT License" }
 description = "A package of reinforcement learning environments for flight control using the JSBSim flight dynamics model."
 classifiers = [
     "License :: OSI Approved :: MIT License",
@@ -23,6 +23,7 @@ dependencies = ["numpy", "gymnasium", "jsbsim", "matplotlib"]
 
 [project.urls]
 Homepage = "https://github.com/sryu1/jsbgym"
+Repository = "https://github.com/sryu1/jsbgym"
 "Bug Tracker" = "https://github.com/sryu1/jsbgym/issues"
 
 

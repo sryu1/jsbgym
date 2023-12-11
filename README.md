@@ -19,7 +19,7 @@ Open a terminal and install jsbgym:
 pip install jsbgym
 ```
 
-For Linux systems, rendering with "human" mode will require an additional package:
+For Linux systems, rendering with some modes will require an additional package:
 
 ```console
 sudo apt-get install python3-tk

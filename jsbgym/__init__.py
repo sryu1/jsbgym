@@ -6,7 +6,7 @@ from jsbgym import utils
 
 """
 This script registers all combinations of task, aircraft, shaping settings
- etc. with OpenAI Gym so that they can be instantiated with a gym.make(id)
+ etc. with Farama Foundation Gymnasium so that they can be instantiated with a gym.make(id)
  command.
 
 The jsbgym.Envs enum stores all registered environments as members with

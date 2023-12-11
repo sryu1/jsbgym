@@ -146,7 +146,7 @@ class Simulation(object):
             ic_file = "basic_ic.xml"
 
         ic_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), ic_file)
-        self.jsbsim.load_ic(ic_path, useStoredPath=False)
+        self.jsbsim.load_ic(ic_path, useAircraftPath=False)
         self.load_model(model_name)
         self.jsbsim.set_dt(dt)
         # extract set of legal property names for this aircraft

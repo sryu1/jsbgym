@@ -5,6 +5,7 @@ from jsbgym.simulation import Simulation
 from jsbgym.visualiser import FigureVisualiser, FlightGearVisualiser, GraphVisualiser
 from jsbgym.aircraft import Aircraft, cessna172P
 from typing import Optional, Type, Tuple, Dict
+import warnings
 
 
 class JsbSimEnv(gym.Env):
@@ -18,12 +19,12 @@ class JsbSimEnv(gym.Env):
     variables and agent_reward calculation.
 
     ATTRIBUTION: this class implements the Gymnasium Env API. Method
-    docstrings have been adapted or copied from the OpenAI Gym source code then converted to work with the gymnasium interface.
+    docstrings have been adapted or copied from the OpenAI Gym source code then migrated to work with the gymnasium interface.
     """
 
     JSBSIM_DT_HZ: int = 60  # JSBSim integration frequency
     metadata = {
-        "render_modes": ["human", "flightgear", "human_fg", "graph"],
+        "render_modes": ["human", "flightgear", "human_fg", "graph", "graph_fg"],
         "render_fps": 60,
     }
 
@@ -67,8 +68,14 @@ class JsbSimEnv(gym.Env):
         self.render_mode = render_mode
 
     def step(self, action: np.ndarray) -> Tuple[np.ndarray, float, bool, Dict]:
-        if self.render_mode == "human":
+        if (
+            self.render_mode == "human"
+            or self.render_mode == "graph"
+            or self.render_mode == "human_fg"
+            or self.render_mode == "graph_fg"
+        ):
             self.render()
+
         """
         Run one timestep of the environment's dynamics. When end of
         episode is reached, you are responsible for calling `reset()`
@@ -115,6 +122,31 @@ class JsbSimEnv(gym.Env):
         info = {}
         if self.render_mode == "human":
             self.render()
+        if self.render_mode == "graph":
+            try:
+                self.graph_visualiser.reset()
+            except AttributeError:
+                pass
+        if "NoFG" not in str(self):
+            warnings.warn(
+                "When training, use NoFG instead of FG in the env_id. Using FG will cause errors while training after a while."
+            )
+
+        if self.aircraft.name == "A320" and self.render_mode == "flightgear":
+            warnings.warn(
+                "A320 is not available for rendering to FlightGear. Setting render_mode to None."
+            )
+            self.render_mode = None
+        elif self.aircraft.name == "A320" and self.render_mode == "human_fg":
+            warnings.warn(
+                "A320 is not available for rendering to FlightGear. Setting render_mode to human."
+            )
+            self.render_mode = "human"
+        elif self.aircraft.name == "A320" and self.render_mode == "graph_fg":
+            warnings.warn(
+                "A320 is not available for rendering to FlightGear. Setting render_mode to graph."
+            )
+            self.render_mode = "graph"
         return observation, info
 
     def _init_new_sim(self, dt, aircraft, initial_conditions):
@@ -177,6 +209,12 @@ class JsbSimEnv(gym.Env):
                     self.sim, self.task.get_props_to_output()
                 )
             self.graph_visualiser.plot(self.sim)
+        elif self.render_mode == "graph_fg":
+            if not self.flightgear_visualiser:
+                self.flightgear_visualiser = FlightGearVisualiser(
+                    self.sim, self.task.get_props_to_output(), flightgear_blocking
+                )
+            self.graph_visualiser.plot(self.sim)
         else:
             super().render()
 
@@ -220,7 +258,11 @@ class NoFGJsbSimEnv(JsbSimEnv):
         )
 
     def render(self, flightgear_blocking=True):
-        if self.render_mode == "flightgear" or self.render_mode == "human_fg":
+        if (
+            self.render_mode == "flightgear"
+            or self.render_mode == "human_fg"
+            or self.render_mode == "graph_fg"
+        ):
             raise ValueError("FlightGear rendering is disabled for this class")
         else:
             super().render(flightgear_blocking)
