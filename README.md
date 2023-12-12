@@ -13,26 +13,45 @@ Pretrained models can be found [here](https://huggingface.co/sryu1/jsbgym_models
 
 ## Setup
 
-Open a terminal and install jsbgym:
+### Windows
+
+Open a terminal and install jsbgym via pip:
 
 ```console
 pip install jsbgym
 ```
 
-For Linux systems, rendering with some modes will require an additional package:
+To render the environment with FlightGear, dowloand and install it from [here](https://sourceforge.net/projects/flightgear/). Make sure the FlightGear bin directory is in PATH (Usually `C:\Program Files\FlightGear 2020.3\bin`) and if not already existant, add a system variable called `FG_ROOT` with the FG data folder as it's value (Usually `C:\Program Files\FlightGear 2020.3\data`).
+
+
+### Linux
+
+Open a terminal and install jsbgym via pip:
+
+```console
+pip install jsbgym
+```
+
+Rendering with some modes will require an additional package:
 
 ```console
 sudo apt-get install python3-tk
 ```
 
-To render the environment with FlightGear, dowloand and install it from [here](https://sourceforge.net/projects/flightgear/). Make sure the FlightGear bin directory is in PATH (Usually `C:\Program Files\FlightGear 2020.3\bin`) and if not already existant, add a system variable called `FG_ROOT` with the FG data folder as it's value (Usually `C:\Program Files\FlightGear 2020.3\data`). For Linux, rename the AppImage file to fgfs.AppImage and place it in /usr/local/bin/fgfs. The data file must also be downloaded from [here](https://sourceforge.net/projects/flightgear/files/release-2020.3/) (approximately 2 GB) then in terminal, enter
+Rename the AppImage file to `fgfs` and place it in `/usr/local/bin`:
 
 ```console
-export FG_ROOT=/path/to/folder
+sudo mv fgfs /usr/local/bin
+```
+
+The data files must also be downloaded from [here](https://sourceforge.net/projects/flightgear/files/release-2020.3/) (approximately 2 GB) then in terminal, enter
+
+```console
+export FG_ROOT=/path/to/datafolder
 ```
 
 If there are aircraft installed in a different location, add the folder to the `FG_AIRCRAFT` system variable.
-3D visualisation requires installation of the FlightGear simulator. Confirm it is runnable from terminal with:
+3D visualisation requires installation of the FlightGear simulator. Confirm FlightGear is runnable from terminal with:
 
 ```console
 fgfs --version
