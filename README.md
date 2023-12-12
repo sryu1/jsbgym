@@ -23,6 +23,12 @@ pip install jsbgym
 
 To render the environment with FlightGear, download and install it from [here](https://sourceforge.net/projects/flightgear/). Make sure the FlightGear bin directory is in PATH (Usually `C:\Program Files\FlightGear 2020.3\bin`) and if not already existant, add a system variable called `FG_ROOT` with the FG data folder as it's value (Usually `C:\Program Files\FlightGear 2020.3\data`).
 
+If there are aircraft installed in a different location, add the folder to the `FG_AIRCRAFT` system variable.
+3D visualisation requires installation of the FlightGear simulator. Confirm FlightGear is runnable from terminal with:
+
+```console
+fgfs --version
+```
 
 ### Linux
 
