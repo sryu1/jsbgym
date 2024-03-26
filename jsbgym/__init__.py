@@ -27,3 +27,7 @@ for env_id, (
         entry_point = "jsbgym.environment:NoFGJsbSimEnv"
     kwargs = dict(aircraft=plane, task_type=task, shaping=shaping)
     gym.envs.registration.register(id=env_id, entry_point=entry_point, kwargs=kwargs)
+
+# make an Enum storing every Gym-JSBSim environment ID for convenience and value safety
+Envs = enum.Enum.__call__('Envs', [(utils.AttributeFormatter.translate(env_id), env_id)
+                                   for env_id in utils.get_env_id_kwargs_map().keys()])
