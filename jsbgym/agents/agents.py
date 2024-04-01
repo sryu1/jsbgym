@@ -6,12 +6,10 @@ from abc import ABC, abstractmethod
 
 class Agent(ABC):
     @abstractmethod
-    def act(self, state) -> np.ndarray:
-        ...
+    def act(self, state) -> np.ndarray: ...
 
     @abstractmethod
-    def observe(self, state, action, reward, terminated):
-        ...
+    def observe(self, state, action, reward, terminated): ...
 
 
 class RandomAgent(Agent):

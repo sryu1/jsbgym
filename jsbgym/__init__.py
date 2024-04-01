@@ -29,5 +29,10 @@ for env_id, (
     gym.envs.registration.register(id=env_id, entry_point=entry_point, kwargs=kwargs)
 
 # make an Enum storing every Gym-JSBSim environment ID for convenience and value safety
-Envs = enum.Enum.__call__('Envs', [(utils.AttributeFormatter.translate(env_id), env_id)
-                                   for env_id in utils.get_env_id_kwargs_map().keys()])
+Envs = enum.Enum.__call__(
+    "Envs",
+    [
+        (utils.AttributeFormatter.translate(env_id), env_id)
+        for env_id in utils.get_env_id_kwargs_map().keys()
+    ],
+)

@@ -230,8 +230,7 @@ class FlightTask(Task, ABC):
         self._store_reward(RewardStub(1.0, 1.0), sim)
 
     @abstractmethod
-    def get_initial_conditions(self) -> Dict[Property, float]:
-        ...
+    def get_initial_conditions(self) -> Dict[Property, float]: ...
 
     def get_state_space(self) -> gym.Space:
         state_lows = np.array([state_var.min for state_var in self.state_variables])

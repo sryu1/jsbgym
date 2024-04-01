@@ -91,8 +91,7 @@ class AbstractTestErrorComponent(unittest.TestCase, ABC):
         self.COT = self.get_class_under_test()
 
     @abstractmethod
-    def get_class_under_test(self) -> Type[ErrorComponent]:
-        ...
+    def get_class_under_test(self) -> Type[ErrorComponent]: ...
 
     def get_default_perfect_state(self):
         """Returns a state where the controlled property matches the target exactly"""

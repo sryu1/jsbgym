@@ -382,7 +382,7 @@ class FlightGearVisualiser(object):
             f"{FlightGearVisualiser.PORT},"
             f"{FlightGearVisualiser.PROTOCOL}"
         )
-        flight_model_type_arg = "--fdm=" + "external"
+        flight_model_type_arg = "--fdm=" + "null"
         disable_ai_arg = "--disable-ai-traffic"
         disable_live_weather_arg = "--disable-real-weather-fetch"
         time_of_day_arg = "--timeofday=" + FlightGearVisualiser.TIME

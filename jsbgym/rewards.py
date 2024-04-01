@@ -44,20 +44,18 @@ class RewardComponent(ABC):
     """Interface for RewardComponent, an object which calculates one component value of a Reward"""
 
     @abstractmethod
-    def calculate(self, state: State, last_state: State, is_terminal: bool) -> float:
-        ...
+    def calculate(
+        self, state: State, last_state: State, is_terminal: bool
+    ) -> float: ...
 
     @abstractmethod
-    def get_name(self) -> str:
-        ...
+    def get_name(self) -> str: ...
 
     @abstractmethod
-    def get_potential(self, state: State, is_terminal) -> float:
-        ...
+    def get_potential(self, state: State, is_terminal) -> float: ...
 
     @abstractmethod
-    def is_potential_difference_based(self) -> bool:
-        ...
+    def is_potential_difference_based(self) -> bool: ...
 
 
 class NormalisedComponent(RewardComponent, ABC):

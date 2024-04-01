@@ -25,7 +25,7 @@ class Simulation(object):
         init_conditions: Dict[prp.Property, float] = None,
         allow_flightgear_output: bool = True,
     ):
-        """
+        r"""
         Constructor. Creates an instance of JSBSim and sets initial conditions.
 
         :param sim_frequency_hz: the JSBSim integration frequency in Hz.
