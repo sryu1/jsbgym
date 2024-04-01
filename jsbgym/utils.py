@@ -12,7 +12,7 @@ class AttributeFormatter(object):
     Used through its static method, translate()
     """
 
-    ILLEGAL_CHARS = "\-/."
+    ILLEGAL_CHARS = r"\-/."
     TRANSLATE_TO = "_" * len(ILLEGAL_CHARS)
     TRANSLATION_TABLE = str.maketrans(ILLEGAL_CHARS, TRANSLATE_TO)
 
