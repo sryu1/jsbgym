@@ -85,7 +85,7 @@ f"{aircraft}-{task}-{shaping}-{flightgear}-v0"
 
 ### Aircraft
 
-The environment can be configured to use one of nine aircraft:
+The environment can be configured to use one of 14 aircraft:
 
 * **C172** Cessna 172P Skyhawk (Default FlightGear Aircraft)
 * **PA28** Piper PA-28-161 Warrior II
@@ -98,6 +98,9 @@ The environment can be configured to use one of nine aircraft:
 * **B747** Boeing 747-400
 * **MD11** McDonnell Douglas MD-11
 * **DHC6** de Havilland Canada DHC-6-300 Twin Otter
+* **C130** Lockheed C-130 Hercules
+* **WF** Wright Flyer II 1903
+* **SS** Royal Naval Air Service Submarine Scout Zero Airship
 
 All aircraft except the Cessna 172P requires the aircraft to be downloaded via the launcher using the default FlightGear Hangar if using flightgear.
 

@@ -390,7 +390,7 @@ class FlightGearVisualiser(object):
             flightgear_cmd,
             aircraft_arg,
             flight_model_arg,
-            # flight_model_type_arg, # Aircraft starts from inside ground if used
+            flight_model_type_arg, # Aircraft starts from inside ground if used
             disable_ai_arg,
             disable_live_weather_arg,
             time_of_day_arg,
