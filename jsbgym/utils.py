@@ -1,7 +1,22 @@
 import functools
 import operator
 from typing import Tuple
-from jsbgym.aircraft import c172, a320, f15, pa28, b747, f16, j3, md11, ov10, dhc6, pc7, c130, wf, ss
+from jsbgym.aircraft import (
+    c172,
+    a320,
+    f15,
+    pa28,
+    b747,
+    f16,
+    j3,
+    md11,
+    ov10,
+    dhc6,
+    pc7,
+    c130,
+    wf,
+    ss,
+)
 from typing import Dict, Iterable
 
 
@@ -43,7 +58,22 @@ def get_env_id_kwargs_map() -> Dict[str, Tuple]:
 
     map = {}
     for task_type in (HeadingControlTask, TurnHeadingControlTask):
-        for plane in (c172, a320, f15, pa28, b747, f16, j3, md11, ov10, dhc6, pc7, c130, wf, ss):
+        for plane in (
+            c172,
+            a320,
+            f15,
+            pa28,
+            b747,
+            f16,
+            j3,
+            md11,
+            ov10,
+            dhc6,
+            pc7,
+            c130,
+            wf,
+            ss,
+        ):
             for shaping in (Shaping.STANDARD, Shaping.EXTRA, Shaping.EXTRA_SEQUENTIAL):
                 for enable_flightgear in (True, False):
                     id = get_env_id(plane, task_type, shaping, enable_flightgear)
