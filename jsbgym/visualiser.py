@@ -321,7 +321,6 @@ class FlightGearVisualiser(object):
     LOADED_MESSAGE = "loading cities done"
     LOADED_MESSAGE1 = "Starting hard-coded terrain presampling"
     FLIGHTGEAR_TIME_FACTOR = 1  # sim speed relative to realtime, higher is faster
-    TIME = "morning"
 
     def __init__(
         self, sim: Simulation, print_props: Tuple[prp.Property], block_until_loaded=True
@@ -368,10 +367,6 @@ class FlightGearVisualiser(object):
 
     @staticmethod
     def _create_cmd_line_args(aircraft_id: str):
-        # FlightGear doesn't have a 172X model, use the P instead
-        if aircraft_id == "c172x":
-            aircraft_id = "c172p"
-
         flightgear_cmd = "fgfs"
         aircraft_arg = f"--aircraft={aircraft_id}"
         flight_model_arg = (
@@ -385,12 +380,12 @@ class FlightGearVisualiser(object):
         flight_model_type_arg = "--fdm=" + "null"
         disable_ai_arg = "--disable-ai-traffic"
         disable_live_weather_arg = "--disable-real-weather-fetch"
-        time_of_day_arg = "--timeofday=" + FlightGearVisualiser.TIME
+        time_of_day_arg = "--timeofday=" + "morning"
         return (
             flightgear_cmd,
             aircraft_arg,
             flight_model_arg,
-            flight_model_type_arg, # Aircraft starts from inside ground if used
+            flight_model_type_arg, # Aircraft starts from inside ground if used - ensures no external fdm takes effect.
             disable_ai_arg,
             disable_live_weather_arg,
             time_of_day_arg,
