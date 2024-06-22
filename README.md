@@ -9,8 +9,6 @@ JSBGym provides reinforcement learning environments for the control of fixed-win
 
 ![Example](https://github.com/sryu1/jsbgym/blob/main/docs/J3.gif?raw=true)
 
-Pretrained models can be found [here](https://huggingface.co/sryu1/jsbgym_models)
-
 ## Setup
 
 ### Windows
