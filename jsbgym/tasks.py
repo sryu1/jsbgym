@@ -305,7 +305,6 @@ class HeadingControlTask(FlightTask):
         self.state_variables = (
             FlightTask.base_state_variables + self.extra_state_variables
         )
-        print(self.state_variables)
         self.positive_rewards = positive_rewards
         assessor = self.make_assessor(shaping_type)
         super().__init__(assessor)
