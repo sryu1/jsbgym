@@ -105,10 +105,6 @@ class FlightTask(Task, ABC):
         prp.p_radps,
         prp.q_radps,
         prp.r_radps,
-        prp.aileron_left,
-        prp.aileron_right,
-        prp.elevator,
-        prp.rudder,
     )
     base_initial_conditions = (
         types.MappingProxyType(  # MappingProxyType makes dict immutable
@@ -304,13 +300,12 @@ class HeadingControlTask(FlightTask):
         self.aircraft = aircraft
         self.extra_state_variables = (
             self.altitude_error_ft,
-            prp.sideslip_deg,
             self.track_error_deg,
-            self.steps_left,
         )
         self.state_variables = (
             FlightTask.base_state_variables + self.extra_state_variables
         )
+        print(self.state_variables)
         self.positive_rewards = positive_rewards
         assessor = self.make_assessor(shaping_type)
         super().__init__(assessor)

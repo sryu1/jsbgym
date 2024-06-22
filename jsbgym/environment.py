@@ -131,22 +131,6 @@ class JsbSimEnv(gym.Env):
             warnings.warn(
                 "If training, use NoFG instead of FG in the env_id. Using FG will cause errors while training after a while."
             )
-
-        if self.aircraft.name == "A320" and self.render_mode == "flightgear":
-            warnings.warn(
-                "A320 is not available for rendering to FlightGear. Setting render_mode to None."
-            )
-            self.render_mode = None
-        elif self.aircraft.name == "A320" and self.render_mode == "human_fg":
-            warnings.warn(
-                "A320 is not available for rendering to FlightGear. Setting render_mode to human."
-            )
-            self.render_mode = "human"
-        elif self.aircraft.name == "A320" and self.render_mode == "graph_fg":
-            warnings.warn(
-                "A320 is not available for rendering to FlightGear. Setting render_mode to graph."
-            )
-            self.render_mode = "graph"
         return observation, info
 
     def _init_new_sim(self, dt, aircraft, initial_conditions):
