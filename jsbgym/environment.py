@@ -129,7 +129,7 @@ class JsbSimEnv(gym.Env):
                 pass
         if "NoFG" not in str(self):
             warnings.warn(
-                "If training, use NoFG instead of FG in the env_id. Using FG will cause errors while training after a while."
+                "Use NoFG instead of FG in the env_id if training. Using FG will cause errors while training after a while."
             )
         return observation, info
 
@@ -197,6 +197,10 @@ class JsbSimEnv(gym.Env):
             if not self.flightgear_visualiser:
                 self.flightgear_visualiser = FlightGearVisualiser(
                     self.sim, self.task.get_props_to_output(), flightgear_blocking
+                )
+            if not self.graph_visualiser:
+                self.graph_visualiser = GraphVisualiser(
+                    self.sim, self.task.get_props_to_output()
                 )
             self.graph_visualiser.plot(self.sim)
         else:

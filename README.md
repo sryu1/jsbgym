@@ -1,6 +1,6 @@
 # JSBGym
 
-[![Python: 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![Python: 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![PyPI Version](https://img.shields.io/pypi/v/jsbgym)](https://pypi.org/project/jsbgym)
 [![PyPI - Downloads](https://img.shields.io/pypi/dm/jsbgym)](https://pypistats.org/packages/jsbgym)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
@@ -19,7 +19,7 @@ Open a terminal and install jsbgym via pip:
 pip install jsbgym
 ```
 
-To render the environment with FlightGear, download and install it from [here](https://sourceforge.net/projects/flightgear/). Make sure the FlightGear bin directory is in PATH (Usually `C:\Program Files\FlightGear 2020.3\bin`) and if not already existant, add a system variable called `FG_ROOT` with the FG data folder as it's value (Usually `C:\Program Files\FlightGear 2020.3\data`).
+To render the environment with FlightGear, download and install it from [here](https://www.flightgear.org/). Make sure the FlightGear bin directory is in PATH (Usually `C:\Program Files\FlightGear 2024.1\bin`) and if not already existant, add a system variable called `FG_ROOT` with the FG data folder as it's value (Usually `C:\Users\USERNAME\FlightGear\Downloads\fgdata_2024_1`).
 
 If there are aircraft installed in a different location, add the folder to the `FG_AIRCRAFT` system variable.
 3D visualisation requires installation of the FlightGear simulator. Confirm FlightGear is runnable from terminal with:
@@ -150,6 +150,8 @@ env = gym.make("C172-HeadingControlTask-Shaping.STANDARD-FG-v0", render_mode="fl
 env.reset()
 env.render()
 ```
+
+The environment can also be visualised with a 3D graph, using the `render_mode="graph"` or also `graph_fg`.
 
 ## State and Action Space
 

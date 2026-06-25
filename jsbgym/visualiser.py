@@ -260,47 +260,60 @@ class FigureVisualiser(object):
 
 
 class GraphVisualiser(object):
-    PLOT_PAUSE_SECONDS = 0.0001
 
     def __init__(self, _: Simulation, print_props: Tuple[prp.Property]):
         self.print_props = print_props
         self.figure: plt.Figure = None
+        self.ax = None
+        self.line = None
+        self.lat_data = []
+        self.lon_data = []
+        self.alt_data = []
 
-    def plot(self, sim: Simulation):
+    def _init_figure(self):
         mpt.use("TkAgg")
         plt.ion()
-        if not self.figure:
-            self.figure = plt.figure(figsize=(6, 11))
-            plt.show()
-            self.ax = self.figure.add_subplot(111, projection="3d")
-
-        self.alt = sim[prp.altitude_sl_ft]
-        self.long = sim[prp.lng_geoc_deg]
-        self.lat = sim[prp.lat_geod_deg]
-
-        self.ax.set_xlabel("Lattitude")
+        self.figure = plt.figure()
+        self.ax = self.figure.add_subplot(111, projection="3d")
+        self.ax.set_xlabel("Latitude")
         self.ax.set_ylabel("Longitude")
         self.ax.set_zlabel("Altitude")
+        (self.line,) = self.ax.plot([], [], [], marker="o", markersize=2, linestyle="-")
+        plt.show()
 
-        self.ax.scatter(self.lat, self.long, self.alt)
+    def plot(self, sim: Simulation):
+        if self.figure is None:
+            self._init_figure()
 
-        # voodoo pause needed for figure to appear
-        plt.pause(self.PLOT_PAUSE_SECONDS)
+        self.lat_data.append(sim[prp.lat_geod_deg])
+        self.lon_data.append(sim[prp.lng_geoc_deg])
+        self.alt_data.append(sim[prp.altitude_sl_ft])
+
+        self.line.set_data_3d(self.lat_data, self.lon_data, self.alt_data)
+
+        self.ax.set_xlim(min(self.lat_data), max(self.lat_data))
+        self.ax.set_ylim(min(self.lon_data), max(self.lon_data))
+        self.ax.set_zlim(min(self.alt_data), max(self.alt_data))
+
+        self.figure.canvas.draw_idle()
+        self.figure.canvas.flush_events()
 
     def reset(self):
-        plt.cla()
-        if not self.figure:
-            self.figure = plt.figure(figsize=(6, 11))
-            plt.show()
-            self.ax = self.figure.add_subplot(111, projection="3d")
-            self.ax.set_xlabel("Lattitude")
-            self.ax.set_ylabel("Longitude")
-            self.ax.set_zlabel("Altitude")
+        self.lat_data.clear()
+        self.lon_data.clear()
+        self.alt_data.clear()
+        if self.line is not None:
+            self.line.set_data_3d([], [], [])
+            self.figure.canvas.draw_idle()
+        else:
+            self._init_figure()
 
     def close(self):
         if self.figure:
             plt.close(self.figure)
             self.figure = None
+            self.ax = None
+            self.line = None
 
 
 class FlightGearVisualiser(object):
@@ -352,13 +365,11 @@ class FlightGearVisualiser(object):
         cmd_line_args = FlightGearVisualiser._create_cmd_line_args(
             aircraft.flightgear_id
         )
-        gym.logger.info(f'Subprocess: "{cmd_line_args}"')
         flightgear_process = subprocess.Popen(
             cmd_line_args,
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
         )
-        gym.logger.info("Started FlightGear")
         return flightgear_process
 
     def configure_simulation_output(self, sim: Simulation):
@@ -396,7 +407,6 @@ class FlightGearVisualiser(object):
             msg_out = self.flightgear_process.stdout.readline().decode()
             if self.LOADED_MESSAGE in msg_out or self.LOADED_MESSAGE1 in msg_out:
                 time.sleep(5)
-                print("FlightGear Loading Complete")
                 break
             else:
                 time.sleep(0.1)
